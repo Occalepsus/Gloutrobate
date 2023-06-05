@@ -1,8 +1,9 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-int main()
-{
+#include "myMain.h"
+
+int myMain() {
     sf::RenderWindow window(sf::VideoMode(800, 800), "SFML works!");
     sf::CircleShape shape(150.F);
     shape.setFillColor(sf::Color::Green);
@@ -14,6 +15,7 @@ int main()
         {
             if (event.type == sf::Event::Closed)
                 window.close();
+            // TODO : add keyboard control function or class
             if (event.type == sf::Event::KeyPressed)
             {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
@@ -32,6 +34,7 @@ int main()
                     std::cout << "control:" << std::endl;
                     shape.move(sf::Vector2(0.0f, 5.0f));
                 }
+                // TODO : maybe not necessary
                 window.clear();
                 window.draw(shape);
                 window.display();
