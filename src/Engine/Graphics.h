@@ -5,11 +5,14 @@
 #include <functional>
 #include <SFML/Graphics.hpp>
 
+#include "GameObject.h"
+
 namespace gloutobate {
 	class Graphics {
 	private:
 		sf::RenderWindow renderWindow;
 
+		std::vector<gloutobate::GameObject*> gameObjects{};
 		std::vector<sf::Drawable*> drawables{};
 
 		Graphics();
@@ -20,7 +23,9 @@ namespace gloutobate {
 
 		bool drawFrame(std::function<void(sf::Event)> const&);
 
+		void addGameObject(gloutobate::GameObject*);
+
 		// Should be called before drawFrame, only for texts or other custom drawables
-		void addDrawable(sf::Drawable*);
+		void addDrawableForOneFrame(sf::Drawable*);
 	};
 }
