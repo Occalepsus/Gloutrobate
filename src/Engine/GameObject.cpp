@@ -14,6 +14,10 @@ GameObject::GameObject(sf::Vector2f const& pos, sf::Vector2f const& size, sf::Te
 }
 
 void GameObject::setPosition(sf::Vector2f p) {
+	pos += p;
+	sprite.setPosition(p);
+}
+void GameObject::move(sf::Vector2f p) {
 	pos = p;
 	sprite.move(p);
 }

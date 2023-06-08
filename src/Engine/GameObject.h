@@ -16,6 +16,7 @@ namespace gloutobate {
 		GameObject(sf::Vector2f const&, sf::Vector2f const&, sf::Texture const&);
 
 		void setPosition(sf::Vector2f);
+		void move(sf::Vector2f);
 		void setSize(sf::Vector2f);
 
 		sf::Sprite getSprite() const;

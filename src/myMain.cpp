@@ -9,16 +9,16 @@ void dealEvent(sf::Event e, gloutobate::GameObject& shape) {
     if (e.type == sf::Event::KeyPressed)
     {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
-            shape.setPosition(sf::Vector2(-5.0f, 0.0f));
+            shape.move(sf::Vector2(-5.0f, 0.0f));
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-            shape.setPosition(sf::Vector2(5.0f, 0.0f));
+            shape.move(sf::Vector2(5.0f, 0.0f));
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
-            shape.setPosition(sf::Vector2(0.0f, -5.0f));
+            shape.move(sf::Vector2(0.0f, -5.0f));
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-            shape.setPosition(sf::Vector2(0.0f, 5.0f));
+            shape.move(sf::Vector2(0.0f, 5.0f));
         }
     }
 }
