@@ -29,7 +29,7 @@ void GameObject::setSize(sf::Vector2f s) {
 	size = s;
 }
 
-sf::Texture GameObject::getTexture() const {
+sf::Texture const& GameObject::getTexture() const {
 	return texture;
 }
 

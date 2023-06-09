@@ -8,7 +8,7 @@ namespace gloutobate {
 	private:
 		sf::Vector2f pos;
 		sf::Vector2f size;
-		sf::Texture texture;
+		sf::Texture const texture;
 		b2Body* body{ nullptr };
 
 	public:
@@ -25,7 +25,7 @@ namespace gloutobate {
 		sf::Vector2f getSize() const;
 		void setSize(sf::Vector2f);
 
-		sf::Texture getTexture() const;
+		sf::Texture const& getTexture() const;
 
 		b2Body* getBody() const;
 		void setBody(b2Body*);
