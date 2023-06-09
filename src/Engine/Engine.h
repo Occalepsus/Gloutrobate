@@ -16,17 +16,17 @@ namespace gloutobate {
 		Graphics graphicEngine;
 		Physics physicEngine{};
 		std::chrono::milliseconds millisecondsPerFrame;
-		std::jthread gameThread{};
-		std::function<void(sf::Event)> update;
+		std::function<void()> update;
 
 	public:
 		Engine() = delete;
-		Engine(std::string const& name, int width, int height, float fps = 60) : graphicEngine{ name, width, height }, physicEngine{ fps }, millisecondsPerFrame{ static_cast<int>((float)1000 / fps) } {};
+		Engine(std::string const& name, int width, int height, float fps = 60) : graphicEngine{ name, width, height, static_cast<unsigned int>(fps) }, physicEngine{ fps }, millisecondsPerFrame{ static_cast<int>((float)1000 / fps) } {};
+		~Engine() = default;
 
-		void addGameObject(gloutobate::GameObject*, bool = false);
-		void drawOnFrame(sf::Drawable*);
-		void setUpdate(std::function<void(sf::Event)> const& updateFunc) { update = updateFunc; }
+		void addGameObject(gloutobate::GameObject* gameObjectPtr, bool isDynamic = false);
+		void drawOnFrame(sf::Drawable* drawablePtr);
+		void setUpdate(std::function<void()> const& updateFunc) { update = updateFunc; }
 
-		void start();
+		void start(std::function<void(sf::Event)> const& eventHandler);
 	};
 }

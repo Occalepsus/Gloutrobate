@@ -6,7 +6,7 @@ void gloutobate::Physics::update() {
 	world.Step(timeStep, velocityIterations, positionIterations);
 
 	for (auto const& [gameObject, body] : bodies) {
-		gameObject->setPosition(body->GetPosition().x - gameObject->getSize().x / 2, body->GetPosition().y - gameObject->getSize().y / 2);
+		gameObject->setPosition(body->GetPosition().x - gameObject->getSize().x / 2, body->GetPosition().y + gameObject->getSize().y / 2);
 	}
 }
 

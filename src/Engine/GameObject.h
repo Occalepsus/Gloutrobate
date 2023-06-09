@@ -13,21 +13,22 @@ namespace gloutobate {
 
 	public:
 		GameObject() = default;
-		explicit GameObject(sf::Texture const&);
-		GameObject(sf::Vector2f const&, sf::Vector2f const&, sf::Texture const&);
+		explicit GameObject(sf::Texture const& gameObjectTexture);
+		GameObject(sf::Vector2f const& initialPosition, sf::Vector2f const& size, sf::Texture const& gameObjectTexture);
 
 		sf::Vector2f getPosition() const;
-		void setPosition(sf::Vector2f);
-		void setPosition(float x, float y);
+		void setPosition(sf::Vector2f newPosition);
+		void setPosition(float newX, float newY);
 
-		void move(sf::Vector2f);
+		void move(sf::Vector2f moveVector);
+		void move(float dx, float dy);
 
 		sf::Vector2f getSize() const;
-		void setSize(sf::Vector2f);
+		void setSize(sf::Vector2f newSize);
 
 		sf::Texture const& getTexture() const;
 
 		b2Body* getBody() const;
-		void setBody(b2Body*);
+		void setBody(b2Body* physicBodyPtr);
 	};
 }

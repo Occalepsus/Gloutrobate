@@ -9,7 +9,7 @@
 namespace gloutobate {
 	class Physics {
 	private:
-		b2World world{ b2Vec2(0.0f, 9.8f) };
+		b2World world{ b2Vec2(0.0f, -9.8f) };
 		std::map<GameObject*, b2Body*> bodies{};
 		const float timeStep{ 1.0f / 60.0f };
 		const int32 velocityIterations{ 6 };
@@ -22,7 +22,7 @@ namespace gloutobate {
 
 		void update();
 
-		void createDynamicBody(GameObject*, float);
-		void createStaticBody(GameObject*);
+		void createDynamicBody(GameObject* gameObjectPtr, float mass);
+		void createStaticBody(GameObject* gameObjectPtr);
 	};
 }
