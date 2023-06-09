@@ -3,13 +3,13 @@
 
 using namespace gloutobate;
 
-void gloutobate::Engine::addGameObject(gloutobate::GameObject* gameObject, bool isDynamic) {
-	graphicEngine.addGameObject(gameObject);
+void gloutobate::Engine::addGameObject(gloutobate::GameObject* gameObjectPtr, bool isDynamic) {
+	graphicEngine.addGameObject(gameObjectPtr);
 	if (isDynamic) {
-		physicEngine.createDynamicBody(gameObject, 0.2f);
+		physicEngine.createDynamicBody(gameObjectPtr, 0.2f);
 	}
 	else {
-		physicEngine.createStaticBody(gameObject);
+		physicEngine.createStaticBody(gameObjectPtr);
 	}
 }
 
@@ -18,12 +18,10 @@ void gloutobate::Engine::drawOnFrame(sf::Drawable* drawable) {
 }
 
 void Engine::start() {
-	//gameThread = std::jthread{ [this]() {
-		do {
-			const auto frameStart = std::chrono::steady_clock::now();
-			physicEngine.update();
+	do {
+		const auto frameStart = std::chrono::steady_clock::now();
+		physicEngine.update();
 
-			std::this_thread::sleep_until(frameStart + millisecondsPerFrame);
-		} while (graphicEngine.drawFrame(update));
-	//} };
+		std::this_thread::sleep_until(frameStart + millisecondsPerFrame);
+	} while (graphicEngine.drawFrame(update));
 }

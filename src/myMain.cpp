@@ -31,10 +31,12 @@ int myMain() {
         exit(1);
     }
     
-    gloutobate::GameObject obj{ sf::Vector2f(0.0f, 0.0f), sf::Vector2f(100, 100), texture };
+    gloutobate::GameObject obj{ sf::Vector2f(2.0f, 0.0f), sf::Vector2f(1, 1), texture };
     game.addGameObject(&obj, true);
-    gloutobate::GameObject floor{sf::Vector2f(0.0f, 500.0f), sf::Vector2f(200, 200), texture};
+    gloutobate::GameObject floor{sf::Vector2f(2.0f, 7.0f), sf::Vector2f(2, 2), texture};
     game.addGameObject(&floor, false);
+    gloutobate::GameObject floorRef{sf::Vector2f(4.0f, 5.0f), sf::Vector2f(2, 2), texture};
+    game.addGameObject(&floorRef, false);
 
     uint32_t i{ 0 };
     sf::Font font{};
@@ -59,6 +61,7 @@ int myMain() {
         temp.append(std::to_string(i));
         text.setString(temp);
         game.drawOnFrame(&text);
+        //std::cout << i << '\n';
         i++;
     });
     game.start();

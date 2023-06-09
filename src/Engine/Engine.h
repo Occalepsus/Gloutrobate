@@ -21,7 +21,7 @@ namespace gloutobate {
 
 	public:
 		Engine() = delete;
-		Engine(std::string const& name, int width, int height, float fps = 60) : graphicEngine{ width, height, name }, physicEngine{ fps }, millisecondsPerFrame{ static_cast<int>((float)1000 / fps) } {};
+		Engine(std::string const& name, int width, int height, float fps = 60) : graphicEngine{ name, width, height }, physicEngine{ fps }, millisecondsPerFrame{ static_cast<int>((float)1000 / fps) } {};
 
 		void addGameObject(gloutobate::GameObject*, bool = false);
 		void drawOnFrame(sf::Drawable*);
