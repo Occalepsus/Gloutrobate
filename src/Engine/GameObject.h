@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "box2d/box2d.h"
 
 namespace gloutobate {
 	class GameObject {
@@ -16,8 +17,13 @@ namespace gloutobate {
 		GameObject(sf::Vector2f const&, sf::Vector2f const&, sf::Texture const&);
 
 		void setPosition(sf::Vector2f);
+		void setPosition(float x, float y);
+		sf::Vector2f getPosition() const;
+
 		void move(sf::Vector2f);
+
 		void setSize(sf::Vector2f);
+		sf::Vector2f getSize() const;
 
 		sf::Sprite getSprite() const;
 	};

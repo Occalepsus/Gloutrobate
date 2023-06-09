@@ -3,7 +3,7 @@
 
 #include "myMain.h"
 
-#include "Engine/Graphics.h"
+#include "Engine/Engine.h"
 
 void dealEvent(sf::Event e, gloutobate::GameObject& shape) {
     if (e.type == sf::Event::KeyPressed)
@@ -24,7 +24,7 @@ void dealEvent(sf::Event e, gloutobate::GameObject& shape) {
 }
 
 int myMain() {
-    gloutobate::Graphics window{1920, 1080, "Gloutobate"};
+    gloutobate::Engine game{ "Gloutobate", 1920, 1080, 60 };
 
     sf::Texture texture{};
     if (!texture.loadFromFile("./resources/gateau.png")) {
@@ -32,7 +32,9 @@ int myMain() {
     }
     
     gloutobate::GameObject obj{ sf::Vector2f(0.0f, 0.0f), sf::Vector2f(100, 100), texture };
-    window.addGameObject(&obj);
+    game.addGameObject(&obj, true);
+    gloutobate::GameObject floor{sf::Vector2f(0.0f, 500.0f), sf::Vector2f(200, 200), texture};
+    game.addGameObject(&floor, false);
 
     uint32_t i{ 0 };
     sf::Font font{};
@@ -48,14 +50,18 @@ int myMain() {
     text.setFillColor(sf::Color::Blue);
 
     std::string str{ "Hello world " };
-    do {
+
+    game.setUpdate([&game, /*&obj,*/ &str, &i, &text](sf::Event e) {
+        //dealEvent(e, obj);
+
         // Text example between 2 frames
         std::string temp{ str };
         temp.append(std::to_string(i));
         text.setString(temp);
-        window.addDrawableForOneFrame(&text);
+        game.drawOnFrame(&text);
         i++;
-    } while (window.drawFrame([&obj](sf::Event e) { dealEvent(e, obj); }));
+    });
+    game.start();
 
     return 0;
 }

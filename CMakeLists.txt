@@ -25,6 +25,13 @@ else()
     FetchContent_MakeAvailable(sfml)
 endif()
 
+FetchContent_Declare(
+    box2d
+    GIT_REPOSITORY https://github.com/erincatto/box2d.git
+    GIT_TAG origin/main
+)
+FetchContent_MakeAvailable(box2d)
+
 set(CMAKE_CXX_STANDARD 20)
 
 add_subdirectory(mainLauncher)
