@@ -1,9 +1,9 @@
 #include "Engine.h"
 
 
-using namespace gloutobate;
+using namespace gloutrobate;
 
-void gloutobate::Engine::addGameObject(gloutobate::GameObject* gameObjectPtr, bool isDynamic) {
+void gloutrobate::Engine::addGameObject(gloutrobate::GameObject* gameObjectPtr, bool isDynamic) {
 	if (isDynamic) {
 		physicEngine.createDynamicBody(gameObjectPtr, 1.0f);
 	}
@@ -12,7 +12,7 @@ void gloutobate::Engine::addGameObject(gloutobate::GameObject* gameObjectPtr, bo
 	}
 }
 
-void gloutobate::Engine::drawOnFrame(sf::Drawable* drawable) {
+void gloutrobate::Engine::drawOnFrame(sf::Drawable* drawable) {
 	graphicEngine.addDrawableForOneFrame(drawable);
 }
 

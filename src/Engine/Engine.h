@@ -10,7 +10,7 @@
 #include "Graphics.h"
 #include "Physics.h"
 
-namespace gloutobate {
+namespace gloutrobate {
 	class Engine {
 	private:
 		Graphics graphicEngine;
@@ -18,14 +18,14 @@ namespace gloutobate {
 		std::chrono::milliseconds millisecondsPerFrame;
 		std::function<void()> update;
 
-		std::vector<gloutobate::GameObject*> gameObjects;
+		std::vector<gloutrobate::GameObject*> gameObjects;
 
 	public:
 		Engine() = delete;
 		Engine(std::string const& name, int width, int height, float fps = 60) : graphicEngine{ name, width, height, static_cast<unsigned int>(fps) }, physicEngine{ fps }, millisecondsPerFrame{ static_cast<int>((float)1000 / fps) } {};
 		~Engine() = default;
 
-		void addGameObject(gloutobate::GameObject* gameObjectPtr, bool isDynamic = false);
+		void addGameObject(gloutrobate::GameObject* gameObjectPtr, bool isDynamic = false);
 		void drawOnFrame(sf::Drawable* drawablePtr);
 		void setUpdate(std::function<void()> const& updateFunc) { update = updateFunc; }
 

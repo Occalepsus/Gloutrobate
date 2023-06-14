@@ -1,8 +1,8 @@
 #include "Physics.h"
 
-using namespace gloutobate;
+using namespace gloutrobate;
 
-void gloutobate::Physics::update(std::vector<GameObject*> const& gameObjects) {
+void gloutrobate::Physics::update(std::vector<GameObject*> const& gameObjects) {
 	world.Step(timeStep, velocityIterations, positionIterations);
 
 	for (auto const& gameObject : gameObjects) {
@@ -10,7 +10,7 @@ void gloutobate::Physics::update(std::vector<GameObject*> const& gameObjects) {
 	}
 }
 
-void gloutobate::Physics::createDynamicBody(GameObject* gameObject, float mass) {
+void gloutrobate::Physics::createDynamicBody(GameObject* gameObject, float mass) {
 	b2BodyDef bodyDef{};
 	bodyDef.position.Set(gameObject->getPosition().x, gameObject->getPosition().y);
 	bodyDef.type = b2_dynamicBody;
@@ -30,7 +30,7 @@ void gloutobate::Physics::createDynamicBody(GameObject* gameObject, float mass) 
 	gameObject->setBody(body);
 }
 
-void gloutobate::Physics::createStaticBody(GameObject* gameObject) {
+void gloutrobate::Physics::createStaticBody(GameObject* gameObject) {
 	b2BodyDef bodyDef{};
 	bodyDef.position.Set(gameObject->getPosition().x, gameObject->getPosition().y);
 	bodyDef.type = b2_staticBody;

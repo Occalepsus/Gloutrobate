@@ -1,6 +1,6 @@
 #include "Graphics.h"
 
-using namespace gloutobate;
+using namespace gloutrobate;
 
 Graphics::Graphics(std::string const& name, int width, int height, unsigned int frameLimit, float pixelsPerMeter) : renderWindow{ sf::VideoMode(width, height), name, sf::Style::Titlebar | sf::Style::Close }, pixelsPerMeter{ pixelsPerMeter } {
 	renderWindow.setFramerateLimit(frameLimit);

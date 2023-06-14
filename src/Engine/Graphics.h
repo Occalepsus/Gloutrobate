@@ -7,7 +7,7 @@
 
 #include "GameObject.h"
 
-namespace gloutobate {
+namespace gloutrobate {
 	class Graphics {
 	private:
 		sf::RenderWindow renderWindow;

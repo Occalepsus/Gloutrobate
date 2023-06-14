@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "box2d/box2d.h"
 
-namespace gloutobate {
+namespace gloutrobate {
 	class GameObject {
 	private:
 		sf::Vector2f pos;

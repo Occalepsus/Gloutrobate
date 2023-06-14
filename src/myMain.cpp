@@ -5,7 +5,7 @@
 
 #include "Engine/Engine.h"
 
-void dealEvent(sf::Event e, gloutobate::GameObject const& shape) {
+void dealEvent(sf::Event e, gloutrobate::GameObject const& shape) {
     if (e.type == sf::Event::KeyPressed)
     {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
@@ -26,7 +26,7 @@ void dealEvent(sf::Event e, gloutobate::GameObject const& shape) {
 
 int myMain() {
     // Setup game engine
-    auto game = std::make_unique<gloutobate::Engine>("Gloutobate", 1920, 1080, 60);
+    auto game = std::make_unique<gloutrobate::Engine>("Gloutobate", 1920, 1080, 60);
 
     // Create a texture
     sf::Texture texture{};
@@ -35,11 +35,11 @@ int myMain() {
     }
 
     // Create a game object
-    gloutobate::GameObject obj{ sf::Vector2f(0.2f, 0.8f), sf::Vector2f(0.1f, 0.1f), texture };
+    gloutrobate::GameObject obj{ sf::Vector2f(0.2f, 0.8f), sf::Vector2f(0.1f, 0.1f), texture };
     game->addGameObject(&obj, true);
-    gloutobate::GameObject floor{sf::Vector2f(0.2f, 0.3f), sf::Vector2f(0.2f, 0.2f), texture};
+    gloutrobate::GameObject floor{sf::Vector2f(0.2f, 0.3f), sf::Vector2f(0.2f, 0.2f), texture};
     game->addGameObject(&floor, false);
-    gloutobate::GameObject floorRef{sf::Vector2f(0.4f, 0.5f), sf::Vector2f(0.2f, 0.2f), texture};
+    gloutrobate::GameObject floorRef{sf::Vector2f(0.4f, 0.5f), sf::Vector2f(0.2f, 0.2f), texture};
     game->addGameObject(&floorRef, false);
 
     // Setup for the frame counter

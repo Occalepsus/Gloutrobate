@@ -6,7 +6,7 @@
 
 #include "GameObject.h"
 
-namespace gloutobate {
+namespace gloutrobate {
 	class Physics {
 	private:
 		b2World world{ b2Vec2(0.0f, -9.8f) };
