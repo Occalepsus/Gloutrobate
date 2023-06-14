@@ -4,6 +4,7 @@
 using namespace gloutrobate;
 
 void gloutrobate::Engine::addGameObject(gloutrobate::GameObject* gameObjectPtr, bool isDynamic) {
+	gameObjects.push_back(gameObjectPtr);
 	if (isDynamic) {
 		physicEngine.createDynamicBody(gameObjectPtr, 1.0f);
 	}

@@ -13,7 +13,6 @@ namespace gloutrobate {
 		sf::RenderWindow renderWindow;
 		float pixelsPerMeter;
 
-		//std::vector<gloutobate::GameObject*> gameObjects{};
 		std::vector<sf::Drawable*> drawables{};
 
 		Graphics();
