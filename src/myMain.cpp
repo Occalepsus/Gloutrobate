@@ -16,10 +16,10 @@ void dealEvent(sf::Event e, gloutobate::GameObject const& shape) {
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
-            shape.getBody()->ApplyLinearImpulseToCenter(b2Vec2(-0.001f, 0.0f), true);
+            shape.getBody()->SetLinearVelocity(b2Vec2(-0.1f, shape.getBody()->GetLinearVelocity().y));
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-            shape.getBody()->ApplyLinearImpulseToCenter(b2Vec2(0.001f, 0.0f), true);
+            shape.getBody()->SetLinearVelocity(b2Vec2(0.1f, shape.getBody()->GetLinearVelocity().y));
         }
     }
 }

@@ -18,15 +18,6 @@ void gloutobate::GameObject::setPosition(float x, float y) {
 	pos = sf::Vector2f{ x, y };
 }
 
-void GameObject::move(sf::Vector2f p) {
-	pos += p;
-}
-
-void gloutobate::GameObject::move(float dx, float dy) {
-	pos.x += dx;
-	pos.y += dy;
-}
-
 sf::Vector2f gloutobate::GameObject::getSize() const {
 	return size;
 }

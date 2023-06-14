@@ -13,7 +13,7 @@ namespace gloutobate {
 		sf::RenderWindow renderWindow;
 		float pixelsPerMeter;
 
-		std::vector<gloutobate::GameObject*> gameObjects{};
+		//std::vector<gloutobate::GameObject*> gameObjects{};
 		std::vector<sf::Drawable*> drawables{};
 
 		Graphics();
@@ -22,9 +22,7 @@ namespace gloutobate {
 		Graphics(std::string const& name, int width, int height, unsigned int frameLimit, float pixelsPerMeter = 1000.0f);
 		~Graphics() = default;
 
-		bool drawFrame(std::function<void(sf::Event)> const& eventHandler);
-
-		void addGameObject(gloutobate::GameObject* gameObjectPtr);
+		bool drawFrame(std::vector<GameObject*> const& gameObjects, std::function<void(sf::Event)> const& eventHandler);
 
 		// Should be called before drawFrame, only for texts or other custom drawables
 		void addDrawableForOneFrame(sf::Drawable* drawablePtr);

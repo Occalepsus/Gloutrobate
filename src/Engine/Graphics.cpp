@@ -6,7 +6,7 @@ Graphics::Graphics(std::string const& name, int width, int height, unsigned int 
 	renderWindow.setFramerateLimit(frameLimit);
 }
 
-bool Graphics::drawFrame(std::function<void(sf::Event)> const& eventHandler) {
+bool Graphics::drawFrame(std::vector<GameObject*> const& gameObjects, std::function<void(sf::Event)> const& eventHandler) {
 	renderWindow.clear();
 
 	sf::Event rwEvent;
@@ -41,10 +41,6 @@ bool Graphics::drawFrame(std::function<void(sf::Event)> const& eventHandler) {
 
 	drawables.clear();
 	return renderWindow.isOpen();
-}
-
-void gloutobate::Graphics::addGameObject(gloutobate::GameObject* gameObject) {
-	gameObjects.push_back(gameObject);
 }
 
 void Graphics::addDrawableForOneFrame(sf::Drawable* drawable) {
