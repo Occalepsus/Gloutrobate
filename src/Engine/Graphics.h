@@ -19,7 +19,7 @@ namespace gloutobate {
 		Graphics();
 
 	public:
-		Graphics(std::string const& name, int width, int height, unsigned int frameLimit, float pixelsPerMeter = 100.0f);
+		Graphics(std::string const& name, int width, int height, unsigned int frameLimit, float pixelsPerMeter = 1000.0f);
 		~Graphics() = default;
 
 		bool drawFrame(std::function<void(sf::Event)> const& eventHandler);
