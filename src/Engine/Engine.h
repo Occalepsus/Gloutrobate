@@ -18,8 +18,6 @@ namespace gloutobate {
 		std::chrono::milliseconds millisecondsPerFrame;
 		std::function<void()> update;
 
-		std::vector<gloutobate::GameObject*> gameObjects;
-
 	public:
 		Engine() = delete;
 		Engine(std::string const& name, int width, int height, float fps = 60) : graphicEngine{ name, width, height, static_cast<unsigned int>(fps) }, physicEngine{ fps }, millisecondsPerFrame{ static_cast<int>((float)1000 / fps) } {};

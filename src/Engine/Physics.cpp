@@ -2,11 +2,11 @@
 
 using namespace gloutobate;
 
-void gloutobate::Physics::update(std::vector<GameObject*> const& gameObjects) {
+void gloutobate::Physics::update() {
 	world.Step(timeStep, velocityIterations, positionIterations);
 
-	for (auto const& gameObject : gameObjects) {
-		gameObject->setPosition(gameObject->getBody()->GetPosition().x - gameObject->getSize().x / 2, gameObject->getBody()->GetPosition().y + gameObject->getSize().y / 2);
+	for (auto const& [gameObject, body] : bodies) {
+		gameObject->setPosition(body->GetPosition().x - gameObject->getSize().x / 2, body->GetPosition().y + gameObject->getSize().y / 2);
 	}
 }
 
@@ -18,7 +18,7 @@ void gloutobate::Physics::createDynamicBody(GameObject* gameObject, float mass) 
 	b2Body* body = world.CreateBody(&bodyDef);
 
 	b2PolygonShape dynamicBox{};
-	dynamicBox.SetAsBox(gameObject->getSize().x / 2 - dynamicBox.m_radius, (gameObject->getSize().y - dynamicBox.m_radius) / 2);
+	dynamicBox.SetAsBox(gameObject->getSize().x / 2, gameObject->getSize().y / 2);
 
 	b2FixtureDef fixtureDef{};
 	fixtureDef.shape = &dynamicBox;
@@ -27,6 +27,7 @@ void gloutobate::Physics::createDynamicBody(GameObject* gameObject, float mass) 
 
 	body->CreateFixture(&fixtureDef);
 
+	bodies.insert(std::pair<GameObject*, b2Body*>{gameObject, body});
 	gameObject->setBody(body);
 }
 
@@ -37,9 +38,10 @@ void gloutobate::Physics::createStaticBody(GameObject* gameObject) {
 	b2Body* body = world.CreateBody(&bodyDef);
 
 	b2PolygonShape staticBox{};
-	staticBox.SetAsBox(gameObject->getSize().x / 2 - staticBox.m_radius, gameObject->getSize().y / 2 - staticBox.m_radius);
+	staticBox.SetAsBox(gameObject->getSize().x / 2, gameObject->getSize().y / 2);
 
 	body->CreateFixture(&staticBox, 0.0f);
 
+	bodies.insert(std::pair<GameObject*, b2Body*>{gameObject, body});
 	gameObject->setBody(body);
 }

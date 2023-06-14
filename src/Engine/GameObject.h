@@ -20,6 +20,9 @@ namespace gloutobate {
 		void setPosition(sf::Vector2f newPosition);
 		void setPosition(float newX, float newY);
 
+		void move(sf::Vector2f moveVector);
+		void move(float dx, float dy);
+
 		sf::Vector2f getSize() const;
 		void setSize(sf::Vector2f newSize);
 
