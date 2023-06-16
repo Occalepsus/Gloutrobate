@@ -1,7 +1,5 @@
 #include "Physics.h"
 
-using namespace gloutrobate;
-
 void gloutrobate::Physics::update(std::vector<GameObject*> const& gameObjects) {
 	world.Step(timeStep, velocityIterations, positionIterations);
 

@@ -1,12 +1,10 @@
 #include "Graphics.h"
 
-using namespace gloutrobate;
-
-Graphics::Graphics(std::string const& name, int width, int height, unsigned int frameLimit, float pixelsPerMeter) : renderWindow{ sf::VideoMode(width, height), name, sf::Style::Titlebar | sf::Style::Close }, pixelsPerMeter{ pixelsPerMeter } {
+gloutrobate::Graphics::Graphics(std::string const& name, int width, int height, unsigned int frameLimit, float pixelsPerMeter) : renderWindow{ sf::VideoMode(width, height), name, sf::Style::Titlebar | sf::Style::Close }, pixelsPerMeter{ pixelsPerMeter } {
 	renderWindow.setFramerateLimit(frameLimit);
 }
 
-bool Graphics::drawFrame(std::vector<GameObject*> const& gameObjects, std::function<void(sf::Event)> const& eventHandler) {
+bool gloutrobate::Graphics::drawFrame(std::span<GameObject*> const& gameObjects, std::function<void(sf::Event)> const& eventHandler) {
 	renderWindow.clear();
 
 	sf::Event rwEvent;
@@ -43,6 +41,6 @@ bool Graphics::drawFrame(std::vector<GameObject*> const& gameObjects, std::funct
 	return renderWindow.isOpen();
 }
 
-void Graphics::addDrawableForOneFrame(sf::Drawable* drawable) {
+void gloutrobate::Graphics::addDrawableForOneFrame(sf::Drawable* drawable) {
 	drawables.push_back(drawable);
 }
