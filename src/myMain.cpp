@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
-
+#include "mapGeneration.h"
 #include "myMain.h"
 
 #include "Engine/Engine.h"
@@ -32,6 +32,12 @@ int myMain() {
     sf::Texture texture{};
     if (!texture.loadFromFile("./resources/gateau.png")) {
         exit(1);
+    }
+    
+    Map map{};
+    std::vector<gloutrobate::GameObject> vec{ map.generation() };
+    for (auto& element : vec) {
+        game->addGameObject(&element , false);
     }
 
     // Create a game object

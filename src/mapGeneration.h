@@ -7,6 +7,6 @@ class Map {
 private : 
 
 public : 
-	void generation(gloutrobate::Engine &const game);
-	gloutrobate::GameObject creationPlatform(gloutrobate::Engine &const game);
+	gloutrobate::GameObject creationPlatform();
+	std::vector<gloutrobate::GameObject> generation();
 };
