@@ -36,7 +36,7 @@ endif()
 
 # Now simply link against gtest or gtest_main as needed. Eg
 #   enable_testing()  already done in top CMakeLists.txt
-add_executable(unitTests unitTests.cpp)
+add_executable(unitTests unitTests.cpp "TestPlayer.cpp" "TestPlayer.h")
 target_link_libraries(unitTests gtest_main)
 target_link_libraries(unitTests src)
 add_test(NAME that-test-I-made COMMAND unitTests)
