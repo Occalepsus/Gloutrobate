@@ -2,6 +2,7 @@
 
 gloutrobate::Graphics::Graphics(std::string const& name, int width, int height, unsigned int frameLimit, float pixelsPerMeter) : renderWindow{ sf::VideoMode(width, height), name, sf::Style::Titlebar | sf::Style::Close }, pixelsPerMeter{ pixelsPerMeter } {
 	renderWindow.setFramerateLimit(frameLimit);
+	renderWindow.setKeyRepeatEnabled(false);
 }
 
 bool gloutrobate::Graphics::drawFrame(std::span<GameObject*> const& gameObjects, std::function<void(sf::Event)> const& eventHandler) {

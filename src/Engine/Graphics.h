@@ -12,13 +12,12 @@ namespace gloutrobate {
 	class Graphics {
 	private:
 		sf::RenderWindow renderWindow;
-		float pixelsPerMeter;
+		const float pixelsPerMeter;
 
 		std::vector<sf::Drawable*> drawables{};
 
-		Graphics();
-
 	public:
+		Graphics() = delete;
 		Graphics(std::string const& name, int width, int height, unsigned int frameLimit, float pixelsPerMeter = 1000.0f);
 		~Graphics() = default;
 

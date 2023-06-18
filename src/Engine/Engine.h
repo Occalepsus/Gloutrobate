@@ -16,7 +16,7 @@ namespace gloutrobate {
 		Graphics graphicEngine;
 		Physics physicEngine{};
 		std::chrono::milliseconds millisecondsPerFrame;
-		std::function<void()> update;
+		std::function<void()> update{ []() {/* Empty function if not reassigned */} };
 
 		std::vector<gloutrobate::GameObject*> gameObjects;
 
