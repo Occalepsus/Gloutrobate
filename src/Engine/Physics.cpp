@@ -1,6 +1,6 @@
 #include "Physics.h"
 
-void gloutrobate::Physics::update(std::vector<std::shared_ptr<GameObject>> const& gameObjects) {
+void gloutrobate::Physics::update(std::span<std::shared_ptr<GameObject>> const& gameObjects) {
 	_world.Step(_timeStep, _velocityIterations, _positionIterations);
 
 	for (auto const& gameObject : gameObjects) {
