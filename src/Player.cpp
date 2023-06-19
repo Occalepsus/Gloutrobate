@@ -1,7 +1,7 @@
 #include "Player.h"
 
 void Player::start() {
-    setEventCallback(sf::Event::EventType::KeyPressed, [*this](sf::Event e) { onKeyPressed(e); });
+    setEventCallback(sf::Event::EventType::KeyPressed, [this](sf::Event e) { onKeyPressed(e); });
     getBody()->SetLinearDamping(1);
 }
 
@@ -21,10 +21,19 @@ void Player::update() {
             getBody()->ApplyLinearImpulseToCenter(b2Vec2(0.5, 0), true);
         }
     }
+
+    if (getPosition().y < 0 || getPosition().x < -1 || getPosition().x > 33 ) {
+        setPosition(_initPos);
+        _canJump = true;
+        if (_score > 0) {
+            _score--;
+        }
+	}
 }
 
-void Player::onKeyPressed(sf::Event e) const {
-    if (e.key.code == _upKey) {
+void Player::onKeyPressed(sf::Event e) {
+    if (_canJump && e.key.code == _upKey) {
         getBody()->ApplyLinearImpulseToCenter(b2Vec2(0.0f, 16), true);
+        _canJump = false;
     }
 }

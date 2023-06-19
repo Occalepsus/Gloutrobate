@@ -41,3 +41,7 @@ void gloutrobate::Physics::createStaticBody(std::shared_ptr<GameObject> gameObje
 
 	gameObject->setBody(body);
 }
+
+void gloutrobate::Physics::setContactListener(b2ContactListener* contactListener) {
+	_world.SetContactListener(contactListener);
+}

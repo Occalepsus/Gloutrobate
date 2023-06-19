@@ -5,6 +5,7 @@
 
 #include "Engine/Engine.h"
 #include "Player.h"
+#include "PlayerContact.h"
 
 int myMain() {
     // Setup game engine
@@ -14,11 +15,15 @@ int myMain() {
     int sel{ 0 };
 
     Map map{};
+    std::vector<std::shared_ptr<Platform>> platformPtrs{};
     for (auto& element : map.generation(sel)) {
-        game->addGameObject(std::make_shared<Platform>(element), false);
+        platformPtrs.emplace_back(std::make_shared<Platform>(element));
+        game->addGameObject(platformPtrs.back(), false);
     }
+    std::vector<std::shared_ptr<Cake>> cakePtrs{};
     for (auto& element : map.generationCakes(sel)) {
-        game->addGameObject(std::make_shared<Cake>(element), false);
+        cakePtrs.emplace_back(std::make_shared<Cake>(element));
+        game->addGameObject(cakePtrs.back(), false);
     }
 
     // Create players
@@ -44,6 +49,14 @@ int myMain() {
     auto player2 = std::make_shared<Player>(startingPos[1], sf::Vector2f(1.0f, 1.5f), textureP2);
     player2->setKeys(sf::Keyboard::Up, sf::Keyboard::Left, sf::Keyboard::Down, sf::Keyboard::Right);
     game->addGameObject(player2, true);
+
+    PlayerContact playerContact{};
+    playerContact.setPlayer1(player1);
+    playerContact.setPlayer2(player2);
+    playerContact.setPlatforms(platformPtrs);
+    playerContact.setCakes(cakePtrs);
+
+    game->setContactListener(&playerContact);
 
     // Setup for the frame counter
     uint32_t i{ 0 };

@@ -24,5 +24,7 @@ namespace gloutrobate {
 
 		void createDynamicBody(std::shared_ptr<GameObject> gameObjectPtr, float mass);
 		void createStaticBody(std::shared_ptr<GameObject> gameObjectPtr);
+
+		void setContactListener(b2ContactListener* contactListener);
 	};
 }
