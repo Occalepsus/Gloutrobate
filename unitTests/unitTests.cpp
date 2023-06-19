@@ -3,9 +3,13 @@
 #include <chrono>
 #include <list>
 #include <SFML/Graphics.hpp>
-#include "Player.h"
+
 #include "Engine/Engine.h"
 #include "TestPlayer.h"
+#include "Player.h"
+#include "Platform.h"
+#include "Cake.h"
+#include "PlayerContact.h"
 
 using namespace gloutrobate;
 
@@ -36,6 +40,7 @@ TEST(GameEngine, KeyPressFromKeyBoard) {
 		temp.append(std::to_string(i));
 		text.setString(temp);
 		game->drawOnFrame(&text);
+		return true;
 	});
 
 	for (auto const& delta : deltas) {
@@ -65,6 +70,7 @@ TEST(GameEngine, KeyPressFromKeyEvent) {
 		temp.append(std::to_string(player->i));
 		text.setString(temp);
 		game->drawOnFrame(&text);
+		return true;
 		});
 
 	for (auto const& delta : player->deltas) {
@@ -97,3 +103,28 @@ TEST(Player, Players_body_moves) {
 		});
 }
 
+TEST(GameObject, GameObjectCreation) {
+	auto game = std::make_unique<Engine>("Test", 800, 600, 60);
+
+	sf::Texture text{};
+	ASSERT_TRUE(text.loadFromFile("./resources/Player.png"));
+	auto player{ std::make_shared<Player>(sf::Vector2f(0, 2), sf::Vector2f(1, 1), text) };
+	player->setKeys(sf::Keyboard::Z, sf::Keyboard::Q, sf::Keyboard::S, sf::Keyboard::D);
+
+	game->addGameObject(player, true);
+
+	std::vector<std::shared_ptr<Platform>> gameObjects{
+		std::make_shared<Platform>(sf::Vector2f(0, 0))
+	};
+	game->addGameObject(gameObjects[0]);
+
+	PlayerContact playerContact{};
+	playerContact.setPlayer1(player);
+	playerContact.setPlayer2(player);
+	playerContact.setPlatforms(gameObjects);
+	playerContact.setCakes(std::vector<std::shared_ptr<Cake>>());
+
+	game->setContactListener(&playerContact);
+
+	game->start([]() { return true; });
+}

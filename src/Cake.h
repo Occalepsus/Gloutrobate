@@ -12,6 +12,7 @@ public:
 	explicit Cake(sf::Vector2f pos) : GameObject(pos, sf::Vector2f(0.5,0.5), getCakeTexture()) {};
 	
 	void eat() { _eaten = true; }
+	bool isEaten() const { return _eaten; }
 
 	void start() override;
 	void update() override;

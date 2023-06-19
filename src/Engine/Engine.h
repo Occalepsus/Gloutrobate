@@ -36,7 +36,7 @@ namespace gloutrobate {
 			std::ranges::for_each(_gameObjects.begin(), _gameObjects.end(), [](std::shared_ptr<GameObject> go) { go->start(); });
 			do {
 				// 1- update whole engine
-				update();
+				if (!update()) break;
 				// 2- update physics
 				// 3- call update on all gameObjects
 				// 4- draw frame, call event handlers on all gameObjects

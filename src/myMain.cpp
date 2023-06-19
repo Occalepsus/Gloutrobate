@@ -93,7 +93,17 @@ int myMain() {
     std::string base2{ "Score player 2: " };
 
     // Starts the game and setup for the update function which is passed as a lambda, need to capture the variables needed in update
-    game->start([&game, &base1, &base2, &score1, &score2, &player1, &player2]() {
+    game->start([&game, &base1, &base2, &score1, &score2, &player1, &player2, &cakePtrs]() {
+        uint8 cakeCount{ 0 };
+        std::ranges::for_each(cakePtrs.begin(), cakePtrs.end(), [&cakeCount](auto const& c) {
+            if (c->isEaten()) {
+                cakeCount++;
+            }
+            });
+        if (cakeCount == cakePtrs.size()) {
+            return false;
+        }
+
         // This is called between every frame
         std::string scoreTxt1{ base1 };
         scoreTxt1.append(std::to_string(player1->getScore()));
@@ -106,6 +116,8 @@ int myMain() {
         // Function used to draw something on the frame, cleared after every frame
         game->drawOnFrame(&score1);
         game->drawOnFrame(&score2);
+
+        return true;
     });
 
     // This is the order of the code called between each frame:
