@@ -1,10 +1,13 @@
+#pragma once
+
 #include <iostream>
 #include <string>
 #include <random>
 #include "Engine/Engine.h"
+#include "Platform.h"
 #include <array>
 
-typedef std::vector<gloutrobate::GameObject> list_platforms;
+using list_platforms = std::vector<Platform>;
 
 class Map {
 private : 

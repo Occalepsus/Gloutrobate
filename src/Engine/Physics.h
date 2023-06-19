@@ -9,7 +9,7 @@
 namespace gloutrobate {
 	class Physics {
 	private:
-		b2World _world{ b2Vec2(0.0f, -9.8f) };
+		b2World _world{ b2Vec2(0.0f, -50) };
 		const float _timeStep{ 1.0f / 60.0f };
 		const int32 _velocityIterations{ 6 };
 		const int32 _positionIterations{ 2 };
