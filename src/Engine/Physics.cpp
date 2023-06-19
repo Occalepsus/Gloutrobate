@@ -1,6 +1,6 @@
 #include "Physics.h"
 
-void gloutrobate::Physics::update(std::vector<GameObject*> const& gameObjects) {
+void gloutrobate::Physics::update(std::vector<std::shared_ptr<GameObject>> const& gameObjects) {
 	_world.Step(_timeStep, _velocityIterations, _positionIterations);
 
 	for (auto const& gameObject : gameObjects) {
@@ -8,7 +8,7 @@ void gloutrobate::Physics::update(std::vector<GameObject*> const& gameObjects) {
 	}
 }
 
-void gloutrobate::Physics::createDynamicBody(GameObject* gameObject, float mass) {
+void gloutrobate::Physics::createDynamicBody(std::shared_ptr<GameObject> gameObject, float mass) {
 	b2BodyDef bodyDef{};
 	bodyDef.position.Set(gameObject->getPosition().x, gameObject->getPosition().y);
 	bodyDef.type = b2_dynamicBody;
@@ -28,7 +28,7 @@ void gloutrobate::Physics::createDynamicBody(GameObject* gameObject, float mass)
 	gameObject->setBody(body);
 }
 
-void gloutrobate::Physics::createStaticBody(GameObject* gameObject) {
+void gloutrobate::Physics::createStaticBody(std::shared_ptr<GameObject> gameObject) {
 	b2BodyDef bodyDef{};
 	bodyDef.position.Set(gameObject->getPosition().x, gameObject->getPosition().y);
 	bodyDef.type = b2_staticBody;

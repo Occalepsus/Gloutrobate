@@ -20,9 +20,9 @@ namespace gloutrobate {
 		explicit Physics(float fps) : _timeStep{ 1.0f / fps } {};
 		Physics(float fps, int velocityIterations, int positionIterations) : _timeStep{ 1.0f / fps }, _velocityIterations{ velocityIterations }, _positionIterations{ positionIterations } {};
 
-		void update(std::vector<GameObject*> const& gameObjects);
+		void update(std::vector<std::shared_ptr<GameObject>> const& gameObjects);
 
-		void createDynamicBody(GameObject* gameObjectPtr, float mass);
-		void createStaticBody(GameObject* gameObjectPtr);
+		void createDynamicBody(std::shared_ptr<GameObject> gameObjectPtr, float mass);
+		void createStaticBody(std::shared_ptr<GameObject> gameObjectPtr);
 	};
 }

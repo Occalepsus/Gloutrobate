@@ -15,7 +15,7 @@ int myMain() {
     list_platforms platforms{ map.generation(1) };
 
     for (auto& element : platforms) {
-        game->addGameObject(&element , false);
+        game->addGameObject(std::make_shared<Platform>(element) , false);
     }
 
     // Create players
@@ -24,18 +24,18 @@ int myMain() {
     if (!textureP1.loadFromFile("./resources/Player.png")) {
         exit(1);
     }
-    Player player1{ sf::Vector2f(2, 8), sf::Vector2f(1.0f, 1.5f), textureP1 };
-    player1.setKeys(sf::Keyboard::Z, sf::Keyboard::Q, sf::Keyboard::S, sf::Keyboard::D);
-    game->addGameObject(&player1, true);
+    auto player1 = std::make_shared<Player>(sf::Vector2f(2, 8), sf::Vector2f(1.0f, 1.5f), textureP1);
+    player1->setKeys(sf::Keyboard::Z, sf::Keyboard::Q, sf::Keyboard::S, sf::Keyboard::D);
+    game->addGameObject(player1, true);
 
     // Player 2
     sf::Texture textureP2{};
     if (!textureP2.loadFromFile("./resources/Player2.png")) {
         exit(1);
     }
-    Player player2{ sf::Vector2f(2, 8), sf::Vector2f(1.0f, 1.5f), textureP2 };
-    player2.setKeys(sf::Keyboard::Up, sf::Keyboard::Left, sf::Keyboard::Down, sf::Keyboard::Right);
-    game->addGameObject(&player2, true);
+    auto player2 = std::make_shared<Player>(sf::Vector2f(2, 8), sf::Vector2f(1.0f, 1.5f), textureP2);
+    player2->setKeys(sf::Keyboard::Up, sf::Keyboard::Left, sf::Keyboard::Down, sf::Keyboard::Right);
+    game->addGameObject(player2, true);
 
     // Setup for the frame counter
     uint32_t i{ 0 };

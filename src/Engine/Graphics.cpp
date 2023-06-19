@@ -5,7 +5,7 @@ gloutrobate::Graphics::Graphics(std::string const& name, int width, int height, 
 	_renderWindow.setKeyRepeatEnabled(false);
 }
 
-bool gloutrobate::Graphics::drawFrame(std::span<GameObject*> const& gameObjects) {
+bool gloutrobate::Graphics::drawFrame(std::span<std::shared_ptr<GameObject>> const& gameObjects) {
 	_renderWindow.clear();
 	
 	sf::Event rwEvent;

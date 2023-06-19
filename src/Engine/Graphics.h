@@ -21,7 +21,7 @@ namespace gloutrobate {
 		Graphics(std::string const& name, int width, int height, unsigned int frameLimit, float _pixelsPerMeter = 1000.0f);
 		~Graphics() = default;
 
-		bool drawFrame(std::span<GameObject*> const& gameObjects);
+		bool drawFrame(std::span<std::shared_ptr<GameObject>> const& gameObjects);
 
 		// Should be called before drawFrame, only for texts or other custom drawables
 		void addDrawableForOneFrame(sf::Drawable* drawablePtr);
