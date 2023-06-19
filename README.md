@@ -7,24 +7,21 @@ To control your player, you have to use the arrows or the QZDS inputs. You can m
 Pay attention, the other player can push you over the edge.
 
 # Tools used
-We worked in C++ with SFML.
-
-# Installing and running the project
+We worked in C++ with SFML and Box2D.
 
 # Credits
 This project has been created by :
-- [Victorine Cassé](https://github.com/tihine)
+- [Victorine CassÃ©](https://github.com/tihine)
 - [Julien Joly](https://github.com/Occalepsus)
-# Licence
 
-## Design patterns utilisés
+# Design patterns utilisÃ©s
 
 	- Chain of responsibility
 	- Bridge
 	- Facade
-	- Observer (dans une certaine mesure, pour la gestion des événements SFML)
-	- Iterator (beaucoup de vectors sont utilisés)
+	- Observer (dans une certaine mesure, pour la gestion des Ã©vÃ©nements SFML)
+	- Iterator (beaucoup de vectors sont utilisÃ©s)
 
-##Game programming patterns
+# Game programming patterns
 	- Game Loop (le jeu tourne sans attendre les inputs user)
 	- State (for the jump)
