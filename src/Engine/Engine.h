@@ -23,7 +23,7 @@ namespace gloutrobate {
 
 	public:
 		Engine() = delete;
-		Engine(std::string const& name, int width, int height, float fps = 60) : _graphicEngine{ name, width, height, static_cast<unsigned int>(fps) }, _physicEngine{ fps }, _millisecondsPerFrame{ static_cast<int>((float)1000 / fps) } {};
+		Engine(std::string const& name, int width, int height, float pixelsPerMeter, float fps = 60) : _graphicEngine{ name, width, height, static_cast<unsigned int>(fps), pixelsPerMeter }, _physicEngine{ fps }, _millisecondsPerFrame{ static_cast<int>((float)1000 / fps) } {};
 		~Engine() = default;
 
 		void addGameObject(gloutrobate::GameObject* gameObjectPtr, bool isDynamic = false);

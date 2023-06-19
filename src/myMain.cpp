@@ -8,7 +8,7 @@
 
 int myMain() {
     // Setup game engine
-    auto game = std::make_unique<gloutrobate::Engine>("Gloutobate", 1920, 1080, 60);
+    auto game = std::make_unique<gloutrobate::Engine>("Gloutobate", 1920, 1080, 100.0f, 60);
 
     // Create a texture
     sf::Texture texture{};
