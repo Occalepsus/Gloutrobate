@@ -81,32 +81,32 @@ int myMain() {
     std::string base2{ "Score player 2: " };
 
     // Starts the game and setup for the update function which is passed as a lambda, need to capture the variables needed in update
-    game->start([&game, &base1, &base2, &score1, &score2, &player1, &player2, &cakePtrs]() {
-        uint8 cakeCount{ 0 };
-        std::ranges::for_each(cakePtrs.begin(), cakePtrs.end(), [&cakeCount](auto const& c) {
-            if (c->isEaten()) {
-                cakeCount++;
-            }
-            });
-        if (cakeCount == cakePtrs.size()) {
-            return false;
-        }
+    //game->start([&game, &base1, &base2, &score1, &score2, &player1, &player2, &cakePtrs]() {
+    //    uint8 cakeCount{ 0 };
+    //    std::ranges::for_each(cakePtrs.begin(), cakePtrs.end(), [&cakeCount](auto const& c) {
+    //        if (c->isEaten()) {
+    //            cakeCount++;
+    //        }
+    //        });
+    //    if (cakeCount == cakePtrs.size()) {
+    //        return false;
+    //    }
 
-        // This is called between every frame
-        std::string scoreTxt1{ base1 };
-        scoreTxt1.append(std::to_string(player1->getScore()));
-        score1.setString(scoreTxt1);
+    //    // This is called between every frame
+    //    std::string scoreTxt1{ base1 };
+    //    scoreTxt1.append(std::to_string(player1->getScore()));
+    //    score1.setString(scoreTxt1);
 
-        std::string scoreTxt2{ base2 };
-        scoreTxt2.append(std::to_string(player2->getScore()));
-        score2.setString(scoreTxt2);
+    //    std::string scoreTxt2{ base2 };
+    //    scoreTxt2.append(std::to_string(player2->getScore()));
+    //    score2.setString(scoreTxt2);
 
-        // Function used to draw something on the frame, cleared after every frame
-        game->drawOnFrame(&score1);
-        game->drawOnFrame(&score2);
+    //    // Function used to draw something on the frame, cleared after every frame
+    //    game->drawOnFrame(&score1);
+    //    game->drawOnFrame(&score2);
 
-        return true;
-    });
+    //    return true;
+    //});
 
     // This is the order of the code called between each frame:
     // 1. The update function passed to the engine is called
@@ -130,7 +130,8 @@ int myMain() {
         victory_text.setFillColor(sf::Color::Red);
 	}
     victory_text.setFont(font);
-    victory_text.setPosition(200, 100);
+    auto bounds = sf::Vector2f{ victory_text.getGlobalBounds().width, victory_text.getGlobalBounds().height };
+    victory_text.setPosition(sf::Vector2f{ static_cast<sf::Vector2f>(victoryWindow.getSize()) / 2.0f - bounds });
     victory_text.setCharacterSize(50);
 
     while (victoryWindow.isOpen()) {
