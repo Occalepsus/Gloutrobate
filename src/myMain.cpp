@@ -10,24 +10,29 @@ int myMain() {
     // Setup game engine
     auto game = std::make_unique<gloutrobate::Engine>("Gloutobate", 1920, 1080, 60.0f, 60);
 
-    
+    // Get and setup Map
+    int sel{ 0 };
+
     Map map{};
-    for (auto& element : map.generation(0)) {
+    for (auto& element : map.generation(sel)) {
         game->addGameObject(std::make_shared<Platform>(element), false);
-    };
-    for (auto& element : map.generationCakes(0)) {
+    }
+    for (auto& element : map.generationCakes(sel)) {
         game->addGameObject(std::make_shared<Cake>(element), false);
-    };
-    //TODO : get position player
-    //use the method getStartingPosition(same index as generation methods)
+    }
 
     // Create players
+    auto startingPos{ map.getStartingPosition(sel) };
+    if (startingPos.size() != 2) {
+        exit(1);
+    }
+
     // Player 1
     sf::Texture textureP1{};
     if (!textureP1.loadFromFile("./resources/Player.png")) {
         exit(1);
     }
-    auto player1 = std::make_shared<Player>(sf::Vector2f(2, 8), sf::Vector2f(1.0f, 1.5f), textureP1);
+    auto player1 = std::make_shared<Player>(startingPos[0], sf::Vector2f(1.0f, 1.5f), textureP1);
     player1->setKeys(sf::Keyboard::Z, sf::Keyboard::Q, sf::Keyboard::S, sf::Keyboard::D);
     game->addGameObject(player1, true);
 
@@ -36,7 +41,7 @@ int myMain() {
     if (!textureP2.loadFromFile("./resources/Player2.png")) {
         exit(1);
     }
-    auto player2 = std::make_shared<Player>(sf::Vector2f(2, 8), sf::Vector2f(1.0f, 1.5f), textureP2);
+    auto player2 = std::make_shared<Player>(startingPos[1], sf::Vector2f(1.0f, 1.5f), textureP2);
     player2->setKeys(sf::Keyboard::Up, sf::Keyboard::Left, sf::Keyboard::Down, sf::Keyboard::Right);
     game->addGameObject(player2, true);
 
