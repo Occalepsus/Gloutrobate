@@ -8,17 +8,6 @@
 
 using namespace gloutrobate;
 
-/* GameObject Map::creationPlatform() {
-    sf::Texture texture_platform{};
-    if (!texture_platform.loadFromFile("./resources/platform.png")) {
-        exit(1);
-    }
-    GameObject obj{ sf::Vector2f(float(std::rand()), float(std::rand())), sf::Vector2f(4,4), texture_platform};
-    
-    return obj;
-}
-*/
-
 //This function is used to generate the platforms of the map selected
 list_platforms Map::generation(int selection) const {
     std::vector<list_platforms> maps{
@@ -65,9 +54,7 @@ list_platforms Map::generation(int selection) const {
         Platform{ sf::Vector2f(3.5f, 17.f) }
         
     } };
-    //list_platforms map3;
     return maps[selection];
-  
 }
 
 //This function is used to generate the cakes of the map selected

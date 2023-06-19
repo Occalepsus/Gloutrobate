@@ -3,7 +3,7 @@
 #include <chrono>
 #include <list>
 #include <SFML/Graphics.hpp>
-
+#include "Player.h"
 #include "Engine/Engine.h"
 #include "TestPlayer.h"
 
@@ -70,5 +70,30 @@ TEST(GameEngine, KeyPressFromKeyEvent) {
 	for (auto const& delta : player->deltas) {
 		std::cout << delta << std::endl;
 	}
+}
+
+TEST(Player, Player_movement) {
+	sf::Vector2f initialPosition(0.f, 0.f);
+	sf::Texture text{};
+	text.loadFromFile("./resources/Player.png");
+	Player player(initialPosition,sf::Vector2f(1,1),text);
+	sf::Vector2f move(100.f, 0.f);
+	player.move(move);
+	ASSERT_EQ(player.getPosition(), move);
+
+}
+
+TEST(Player, Players_body_moves) {
+	auto game = std::make_unique<Engine>("Test", 800, 600, 60);
+	sf::Vector2f initialPosition(0.f, 0.f);
+	sf::Vector2f move(100.f, 0.f);
+	sf::Texture text{};
+	ASSERT_TRUE(text.loadFromFile("./resources/Player.png"));
+	auto player = std::make_shared<Player>(initialPosition, sf::Vector2f(1, 1), text);
+	game->addGameObject(player, true);
+	player->move(move);
+	game->start([&player]() {
+		std::cout << player->getBody()->GetTransform().p.x << " " << player->getBody()->GetTransform().p.y << "\n";
+		});
 }
 

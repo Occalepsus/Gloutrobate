@@ -76,7 +76,8 @@ int myMain() {
     text.setFillColor(sf::Color::Blue);
 
     std::string str{ "Hello world " };
-
+    bool playerWins = false;
+    
     // Starts the game and setup for the update function which is passed as a lambda, need to capture the variables needed in update
     game->start([&game, &str, &i, &text,&score1, &score2]() {
         // This is called between every frame
@@ -95,6 +96,30 @@ int myMain() {
     // 2. The physics is updated
     // 3. Catching each event
     // 4. Drawing on the frame
+
+    if (playerWins) {
+        // Create the victory window
+        sf::RenderWindow victoryWindow(sf::VideoMode(400, 200), "Victory Window");
+        sf::Text victory_text{};
+        victory_text.setString("Victory !");
+        victory_text.setFont(font);
+        victory_text.setPosition(200, 100);
+        victory_text.setCharacterSize(50);
+        victory_text.setFillColor(sf::Color::Yellow);
+
+        while (victoryWindow.isOpen()) {
+            sf::Event event;
+            while (victoryWindow.pollEvent(event)) {
+                if (event.type == sf::Event::Closed) {
+                    victoryWindow.close();
+                }
+            }
+
+            victoryWindow.clear();
+            victoryWindow.draw(victory_text);
+            victoryWindow.display();
+        }
+    }
 
     return 0;
 }
