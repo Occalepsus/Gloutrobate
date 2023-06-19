@@ -14,6 +14,10 @@ void gloutrobate::Engine::drawOnFrame(sf::Drawable* drawable) {
 	_graphicEngine.addDrawableForOneFrame(drawable);
 }
 
+void gloutrobate::Engine::setContactListener(b2ContactListener* contactListenerPtr) {
+	_physicEngine.setContactListener(contactListenerPtr);
+}
+
 bool gloutrobate::Engine::runFrame() {
 	// 1- update whole engine (called before)
 

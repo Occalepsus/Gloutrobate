@@ -28,6 +28,7 @@ namespace gloutrobate {
 
 		void addGameObject(std::shared_ptr<gloutrobate::GameObject> gameObjectPtr, bool isDynamic = false);
 		void drawOnFrame(sf::Drawable* drawablePtr);
+		void setContactListener(b2ContactListener* contactListenerPtr);
 
 		template<typename T>
 		void start(T update) {

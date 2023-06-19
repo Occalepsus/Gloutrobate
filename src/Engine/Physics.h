@@ -3,6 +3,7 @@
 #include "box2d/box2d.h"
 #include <map>
 #include <string>
+#include <span>
 
 #include "GameObject.h"
 
@@ -20,9 +21,11 @@ namespace gloutrobate {
 		explicit Physics(float fps) : _timeStep{ 1.0f / fps } {};
 		Physics(float fps, int velocityIterations, int positionIterations) : _timeStep{ 1.0f / fps }, _velocityIterations{ velocityIterations }, _positionIterations{ positionIterations } {};
 
-		void update(std::vector<std::shared_ptr<GameObject>> const& gameObjects);
+		void update(std::span<std::shared_ptr<GameObject>> const& gameObjects);
 
 		void createDynamicBody(std::shared_ptr<GameObject> gameObjectPtr, float mass);
 		void createStaticBody(std::shared_ptr<GameObject> gameObjectPtr);
+
+		void setContactListener(b2ContactListener* contactListener);
 	};
 }
