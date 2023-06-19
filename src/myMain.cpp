@@ -12,11 +12,17 @@ int myMain() {
 
     
     Map map{};
-    list_platforms platforms{ map.generation(1) };
-
+    list_platforms platforms{ map.generation(0) };
     for (auto& element : platforms) {
-        game->addGameObject(&element , false);
-    }
+        game->addGameObject(&element, false);
+    };
+    list_cakes cakes{ map.generationCakes(0) };
+    for (auto& element : cakes) {
+        game->addGameObject(&element, false);
+    };
+    //TODO : get position player
+    //use the method getStartingPosition(same index as generation methods)
+
 
     // Create players
     // Player 1
