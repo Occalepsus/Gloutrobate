@@ -2,11 +2,14 @@
 #include <string>
 #include <random>
 #include "Engine/Engine.h"
+#include <array>
+
+typedef std::vector<gloutrobate::GameObject> list_platforms;
 
 class Map {
 private : 
+	list_platforms list;
 
 public : 
-	gloutrobate::GameObject creationPlatform();
-	std::vector<gloutrobate::GameObject> generation();
+	list_platforms generation(int selection);
 };

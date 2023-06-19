@@ -8,7 +8,7 @@
 
 int myMain() {
     // Setup game engine
-    auto game = std::make_unique<gloutrobate::Engine>("Gloutobate", 1920, 1080, 100.0f, 60);
+    auto game = std::make_unique<gloutrobate::Engine>("Gloutobate", 1920, 1080, 60.0f, 60);
 
     // Create a texture
     sf::Texture texture{};
@@ -17,8 +17,9 @@ int myMain() {
     }
     
     Map map{};
-    std::vector<gloutrobate::GameObject> vec{ map.generation() };
-    for (auto& element : vec) {
+    list_platforms platforms{ map.generation(1) };
+
+    for (auto& element : platforms) {
         game->addGameObject(&element , false);
     }
 
