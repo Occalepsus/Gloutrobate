@@ -114,6 +114,8 @@ int myMain() {
     // 3. Catching each event
     // 4. Drawing on the frame
 
+    game.reset();
+
     // Create the victory window
     sf::RenderWindow victoryWindow(sf::VideoMode(800, 300), "Victory Window");
     sf::Text victory_text{};
