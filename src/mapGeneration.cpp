@@ -76,8 +76,8 @@ list_cakes Map::generationCakes(int selection) const {
         Cake{ sf::Vector2f(8.5f, 8.f)},
         Cake{ sf::Vector2f(12.5f, 5.f)},
         Cake{ sf::Vector2f(13.5f, 17.f)},
-        Cake{ sf::Vector2f(16.5f, 30.5f)},
-        Cake{ sf::Vector2f(6.f, 31.f)},
+        Cake{ sf::Vector2f(16.5f, 16.5f)},
+        Cake{ sf::Vector2f(6.f, 17.f)},
         Cake{ sf::Vector2f(25.5f, 8.f)},
         Cake{ sf::Vector2f(22.5f, 3.f)},
         Cake{ sf::Vector2f(18.5f, 10.f)}}
@@ -89,7 +89,7 @@ list_cakes Map::generationCakes(int selection) const {
 std::vector<sf::Vector2f> Map::getStartingPosition(int selection) const {
     std::vector<sf::Vector2f> vecteur;
     if (selection == 1) {
-        vecteur = { sf::Vector2f(0.5, 2), sf::Vector2f(2.5, 2) };
+        vecteur = { sf::Vector2f(0.5, 3), sf::Vector2f(2.5, 3) };
     }
     if (selection == 0) {
         vecteur = { sf::Vector2f(15, 10), sf::Vector2f(16, 10)};

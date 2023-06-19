@@ -12,7 +12,7 @@ int myMain() {
     auto game = std::make_unique<gloutrobate::Engine>("Gloutobate", 1920, 1080, 60.0f, 60);
 
     // Get and setup Map
-    int sel{ 0 };
+    int sel{ 1 };
 
     Map map{};
     std::vector<std::shared_ptr<Platform>> platformPtrs{};
