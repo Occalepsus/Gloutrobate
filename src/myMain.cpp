@@ -58,49 +58,42 @@ int myMain() {
 
     game->setContactListener(&playerContact);
 
-    // Setup for the frame counter
-    uint32_t i{ 0 };
+    // Setup for the scores
     sf::Font font{};
     if (!font.loadFromFile("./resources/ARIAL.TTF")) {
 		exit(1);
 	}
     //Display of the scores
-    sf::Text score1{}; //score of player blue
+    //score of the blue player
+    sf::Text score1{};
     score1.setFont(font);
     score1.setPosition(20, 10);
     score1.setCharacterSize(30);
     score1.setFillColor(sf::Color::Blue);
-    score1.setString("test1");
-    //score1.setString(getScore);
+    std::string base1{ "Score player 1: " };
 
-    sf::Text score2{}; //score of player red
+    //score of the red player
+    sf::Text score2{};
     score2.setFont(font);
-    score2.setPosition(1800, 10);
+    score2.setPosition(1650, 10);
     score2.setCharacterSize(30);
     score2.setFillColor(sf::Color::Red);
-    score2.setString("test2");
-    //score2.setString(getScore);
-
-    // Setup for the text
-    sf::Text text{};
-    text.setFont(font);
-    text.setPosition(100, 100);
-    text.setCharacterSize(50);
-    text.setFillColor(sf::Color::Blue);
-
-    std::string str{ "Hello world " };
+    std::string base2{ "Score player 2: " };
 
     // Starts the game and setup for the update function which is passed as a lambda, need to capture the variables needed in update
-    game->start([&game, &str, &i, &text,&score1, &score2]() {
+    game->start([&game, &base1, &base2, &score1, &score2, &player1, &player2]() {
         // This is called between every frame
-        std::string temp{ str };
-        temp.append(std::to_string(i));
-        text.setString(temp);
+        std::string scoreTxt1{ base1 };
+        scoreTxt1.append(std::to_string(player1->getScore()));
+        score1.setString(scoreTxt1);
+
+        std::string scoreTxt2{ base2 };
+        scoreTxt2.append(std::to_string(player2->getScore()));
+        score2.setString(scoreTxt2);
+
         // Function used to draw something on the frame, cleared after every frame
-        game->drawOnFrame(&text);
         game->drawOnFrame(&score1);
         game->drawOnFrame(&score2);
-        i++;
     });
 
     // This is the order of the code called between each frame:
