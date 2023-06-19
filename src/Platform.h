@@ -4,7 +4,7 @@
 
 class Platform : public gloutrobate::GameObject {
 private:
-	sf::Texture getPlatformTexture();
+	sf::Texture getPlatformTexture() const;
 
 	using GameObject::GameObject;
 

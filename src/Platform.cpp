@@ -1,6 +1,6 @@
 #include "Platform.h"
 
-sf::Texture Platform::getPlatformTexture() {
+sf::Texture Platform::getPlatformTexture() const {
 	sf::Texture texture_platform;
 	if (!texture_platform.loadFromFile("./resources/platform.png")) {
 		exit(1);
