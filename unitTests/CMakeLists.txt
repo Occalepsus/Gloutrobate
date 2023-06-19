@@ -36,9 +36,19 @@ endif()
 
 # Now simply link against gtest or gtest_main as needed. Eg
 #   enable_testing()  already done in top CMakeLists.txt
-add_executable(unitTests unitTests.cpp)
+add_executable(unitTests unitTests.cpp "TestPlayer.cpp" "TestPlayer.h")
 target_link_libraries(unitTests gtest_main)
 target_link_libraries(unitTests src)
 add_test(NAME that-test-I-made COMMAND unitTests)
+
+add_custom_target(copy-resources-tests ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/resources)
+file(GLOB RESOURCES CONFIGURE_DEPENDS ${CMAKE_SOURCE_DIR}/resources/*.*)
+add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/resources
+                    DEPENDS ${CMAKE_SOURCE_DIR}/resources
+                    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/resources
+                    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                            ${RESOURCES}
+                            ${CMAKE_CURRENT_BINARY_DIR}/resources)
+add_dependencies(unitTests copy-resources-tests)
 
 target_link_libraries(unitTests src sfml-graphics)

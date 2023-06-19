@@ -4,25 +4,7 @@
 #include "myMain.h"
 
 #include "Engine/Engine.h"
-
-void dealEvent(sf::Event e, gloutrobate::GameObject const& shape) {
-    if (e.type == sf::Event::KeyPressed)
-    {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
-            shape.getBody()->ApplyLinearImpulseToCenter(b2Vec2(0.0f, 0.005f), true);
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-            shape.getBody()->ApplyLinearImpulseToCenter(b2Vec2(0.0f, -0.005f), true);
-        }
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
-            shape.getBody()->SetLinearVelocity(b2Vec2(-0.1f, shape.getBody()->GetLinearVelocity().y));
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-            shape.getBody()->SetLinearVelocity(b2Vec2(0.1f, shape.getBody()->GetLinearVelocity().y));
-        }
-    }
-}
+#include "Player.h"
 
 int myMain() {
     // Setup game engine
@@ -41,7 +23,7 @@ int myMain() {
     }
 
     // Create a game object
-    gloutrobate::GameObject obj{ sf::Vector2f(0.2f, 0.8f), sf::Vector2f(0.1f, 0.1f), texture };
+    Player obj{ sf::Vector2f(0.2f, 0.8f), sf::Vector2f(0.1f, 0.1f), texture };
     game->addGameObject(&obj, true);
     gloutrobate::GameObject floor{sf::Vector2f(0.2f, 0.3f), sf::Vector2f(0.2f, 0.2f), texture};
     game->addGameObject(&floor, false);
@@ -64,8 +46,8 @@ int myMain() {
 
     std::string str{ "Hello world " };
 
-    // Setup for the update function which is passed as a lambda, need to capture the variables needed in update
-    game->setUpdate([&game, &str, &i, &text]() {
+    // Starts the game and setup for the update function which is passed as a lambda, need to capture the variables needed in update
+    game->start([&game, &str, &i, &text]() {
         // This is called between every frame
         std::string temp{ str };
         temp.append(std::to_string(i));
@@ -74,10 +56,6 @@ int myMain() {
         game->drawOnFrame(&text);
         i++;
     });
-    // Actually starts the game, the lambda passed as parameter is called every frame for every event
-    game->start([&obj](sf::Event e) { dealEvent(e, obj); });
-
-    // For now, the game is never stopped, so this is never called
 
     // This is the order of the code called between each frame:
     // 1. The update function passed to the engine is called

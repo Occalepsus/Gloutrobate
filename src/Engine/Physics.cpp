@@ -1,10 +1,10 @@
 #include "Physics.h"
 
 void gloutrobate::Physics::update(std::vector<GameObject*> const& gameObjects) {
-	world.Step(timeStep, velocityIterations, positionIterations);
+	_world.Step(_timeStep, _velocityIterations, _positionIterations);
 
 	for (auto const& gameObject : gameObjects) {
-		gameObject->setPosition(gameObject->getBody()->GetPosition().x - gameObject->getSize().x / 2, gameObject->getBody()->GetPosition().y + gameObject->getSize().y / 2);
+		gameObject->updatePositionFromPhysics();
 	}
 }
 
@@ -13,7 +13,7 @@ void gloutrobate::Physics::createDynamicBody(GameObject* gameObject, float mass)
 	bodyDef.position.Set(gameObject->getPosition().x, gameObject->getPosition().y);
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.fixedRotation = true;
-	b2Body* body = world.CreateBody(&bodyDef);
+	b2Body* body = _world.CreateBody(&bodyDef);
 
 	b2PolygonShape dynamicBox{};
 	dynamicBox.SetAsBox(gameObject->getSize().x / 2 - dynamicBox.m_radius, (gameObject->getSize().y - dynamicBox.m_radius) / 2);
@@ -32,7 +32,7 @@ void gloutrobate::Physics::createStaticBody(GameObject* gameObject) {
 	b2BodyDef bodyDef{};
 	bodyDef.position.Set(gameObject->getPosition().x, gameObject->getPosition().y);
 	bodyDef.type = b2_staticBody;
-	b2Body* body = world.CreateBody(&bodyDef);
+	b2Body* body = _world.CreateBody(&bodyDef);
 
 	b2PolygonShape staticBox{};
 	staticBox.SetAsBox(gameObject->getSize().x / 2 - staticBox.m_radius, gameObject->getSize().y / 2 - staticBox.m_radius);
