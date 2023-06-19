@@ -46,6 +46,22 @@ int myMain() {
     if (!font.loadFromFile("./resources/ARIAL.TTF")) {
 		exit(1);
 	}
+    //Display of the scores
+    sf::Text score1{}; //score of player blue
+    score1.setFont(font);
+    score1.setPosition(20, 10);
+    score1.setCharacterSize(30);
+    score1.setFillColor(sf::Color::Blue);
+    score1.setString("test1");
+    //score1.setString(getScore);
+
+    sf::Text score2{}; //score of player red
+    score2.setFont(font);
+    score2.setPosition(1800, 10);
+    score2.setCharacterSize(30);
+    score2.setFillColor(sf::Color::Red);
+    score2.setString("test2");
+    //score2.setString(getScore);
 
     // Setup for the text
     sf::Text text{};
@@ -57,13 +73,15 @@ int myMain() {
     std::string str{ "Hello world " };
 
     // Starts the game and setup for the update function which is passed as a lambda, need to capture the variables needed in update
-    game->start([&game, &str, &i, &text]() {
+    game->start([&game, &str, &i, &text,&score1, &score2]() {
         // This is called between every frame
         std::string temp{ str };
         temp.append(std::to_string(i));
         text.setString(temp);
         // Function used to draw something on the frame, cleared after every frame
         game->drawOnFrame(&text);
+        game->drawOnFrame(&score1);
+        game->drawOnFrame(&score2);
         i++;
     });
 

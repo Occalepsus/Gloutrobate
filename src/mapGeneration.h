@@ -12,9 +12,6 @@ using list_platforms = std::vector<Platform>;
 using list_cakes = std::vector<Cake>;
 
 class Map {
-private : 
-	list_platforms list;
-
 public : 
 	list_platforms generation(int selection);
 	list_cakes generationCakes(int selection);
