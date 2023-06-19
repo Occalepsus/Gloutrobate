@@ -77,19 +77,7 @@ int myMain() {
     score2.setFont(font);
     score2.setPosition(1650, 10);
     score2.setCharacterSize(30);
-    score2.setFillColor(sf::Color::Red);
-    
-
-    // Setup for the text
-    sf::Text text{};
-    text.setFont(font);
-    text.setPosition(100, 100);
-    text.setCharacterSize(50);
-    text.setFillColor(sf::Color::Blue);
-
-    std::string str{ "Hello world " };
-    bool playerWins = false;
-    
+    score2.setFillColor(sf::Color::Red);   
     std::string base2{ "Score player 2: " };
 
     // Starts the game and setup for the update function which is passed as a lambda, need to capture the variables needed in update
@@ -126,28 +114,36 @@ int myMain() {
     // 3. Catching each event
     // 4. Drawing on the frame
 
-    if (playerWins) {
-        // Create the victory window
-        sf::RenderWindow victoryWindow(sf::VideoMode(400, 200), "Victory Window");
-        sf::Text victory_text{};
-        victory_text.setString("Victory !");
-        victory_text.setFont(font);
-        victory_text.setPosition(200, 100);
-        victory_text.setCharacterSize(50);
+    // Create the victory window
+    sf::RenderWindow victoryWindow(sf::VideoMode(800, 300), "Victory Window");
+    sf::Text victory_text{};
+    if (player1->getScore() == player2->getScore()) {
+        victory_text.setString("Tie...");
         victory_text.setFillColor(sf::Color::Yellow);
+    }
+    else if (player1->getScore() > player2->getScore()) {
+		victory_text.setString("Player 1 wins !");
+        victory_text.setFillColor(sf::Color::Blue);
+	}
+	else {
+		victory_text.setString("Player 2 wins !");
+        victory_text.setFillColor(sf::Color::Red);
+	}
+    victory_text.setFont(font);
+    victory_text.setPosition(200, 100);
+    victory_text.setCharacterSize(50);
 
-        while (victoryWindow.isOpen()) {
-            sf::Event event;
-            while (victoryWindow.pollEvent(event)) {
-                if (event.type == sf::Event::Closed) {
-                    victoryWindow.close();
-                }
+    while (victoryWindow.isOpen()) {
+        sf::Event event;
+        while (victoryWindow.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
+                victoryWindow.close();
             }
-
-            victoryWindow.clear();
-            victoryWindow.draw(victory_text);
-            victoryWindow.display();
         }
+
+        victoryWindow.clear();
+        victoryWindow.draw(victory_text);
+        victoryWindow.display();
     }
 
     return 0;
