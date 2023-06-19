@@ -20,7 +20,7 @@ using namespace gloutrobate;
 */
 
 //This function is used to generate the platforms of the map selected
-list_platforms Map::generation(int selection) {
+list_platforms Map::generation(int selection) const {
     std::vector<list_platforms> maps{
     {
         Platform{ sf::Vector2f(2.5f, 1.f) },
@@ -71,7 +71,7 @@ list_platforms Map::generation(int selection) {
 }
 
 //This function is used to generate the cakes of the map selected
-list_cakes Map::generationCakes(int selection) {
+list_cakes Map::generationCakes(int selection) const {
     std::vector<list_cakes> maps{
         {Cake{ sf::Vector2f(2.5f, 2.f)},
         Cake{ sf::Vector2f(1.5f, 16.f)},
@@ -99,13 +99,13 @@ list_cakes Map::generationCakes(int selection) {
 }
 
 //This function is used to define the starting position of the players, depending on the map chosen
-std::vector<sf::Vector2f> Map::getStartingPosition(int selection) {
+std::vector<sf::Vector2f> Map::getStartingPosition(int selection) const {
     std::vector<sf::Vector2f> vecteur;
     if (selection == 1) {
         vecteur = { sf::Vector2f(0.5, 2), sf::Vector2f(2.5, 2) };
     }
     if (selection == 0) {
-        vecteur = { sf::Vector2f(18.5, 15.), sf::Vector2f(20.5, 15.) };
+        vecteur = { sf::Vector2f(15, 10), sf::Vector2f(16, 10)};
     }
     return vecteur;
 }

@@ -46,8 +46,8 @@ TEST(GameEngine, KeyPressFromKeyBoard) {
 TEST(GameEngine, KeyPressFromKeyEvent) {
 	auto game = std::make_unique<Engine>("Test", 800, 600, 60);
 
-	TestPlayer player{};
-	game->addGameObject(&player);
+	auto player{ std::make_shared<TestPlayer>() };
+	game->addGameObject(player);
 
 	sf::Font font{};
 	ASSERT_TRUE(font.loadFromFile("./resources/ARIAL.TTF"));
@@ -62,12 +62,12 @@ TEST(GameEngine, KeyPressFromKeyEvent) {
 	
 	game->start([&game, &str, &text, &player]() {
 		std::string temp{ str };
-		temp.append(std::to_string(player.i));
+		temp.append(std::to_string(player->i));
 		text.setString(temp);
 		game->drawOnFrame(&text);
 		});
 
-	for (auto const& delta : player.deltas) {
+	for (auto const& delta : player->deltas) {
 		std::cout << delta << std::endl;
 	}
 }
