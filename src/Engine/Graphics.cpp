@@ -16,9 +16,8 @@ bool gloutrobate::Graphics::drawFrame(std::span<std::shared_ptr<GameObject>> con
 			return false;
 		}
 		else {
-			// Huge complexity here, but it's the only way to make it work
-			for (auto const& gameObject : gameObjects) {
-				gameObject->handleEvent(rwEvent);
+			for (auto it = _eventCallbacks.find(rwEvent.type); it != _eventCallbacks.end(); ++it) {
+				it->second(rwEvent);
 			}
 		}
 	}

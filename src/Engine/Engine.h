@@ -2,6 +2,7 @@
 
 #include <string>
 #include <thread>
+#include <memory>
 #include <functional>
 #include <chrono>
 
@@ -9,6 +10,7 @@
 
 #include "Graphics.h"
 #include "Physics.h"
+#include "GameObject.h"
 
 namespace gloutrobate {
 	class Engine {
@@ -29,6 +31,7 @@ namespace gloutrobate {
 		void addGameObject(std::shared_ptr<gloutrobate::GameObject> gameObjectPtr, bool isDynamic = false);
 		void drawOnFrame(sf::Drawable* drawablePtr);
 		void setContactListener(b2ContactListener* contactListenerPtr);
+		void setEventCallback(sf::Event::EventType eventType, std::function<void(sf::Event)> const& callback);
 
 		template<typename T>
 		void start(T update) {

@@ -1,15 +1,18 @@
 #pragma once
 
 #include "GameObject.h"
+#include "Engine.h"
 
 gloutrobate::GameObject::GameObject(sf::Texture const& texture) : GameObject(sf::Vector2f{ 0.0f, 0.0f }, sf::Vector2f{ (float)texture.getSize().x, (float)texture.getSize().y }, texture) {};
 
 gloutrobate::GameObject::GameObject(sf::Vector2f const& _pos, sf::Vector2f const& size, sf::Texture const& texture) : _pos{ _pos }, _size{ size }, _texture{ texture } {}
 
-void gloutrobate::GameObject::handleEvent(sf::Event const& event) {
-	if (_eventCallbacks.contains(event.type)) {
-		_eventCallbacks[event.type](event);
-	}
+void gloutrobate::GameObject::setGameEngine(Engine* enginePtr) {
+	_enginePtr = enginePtr;
+}
+
+void gloutrobate::GameObject::setEventCallback(sf::Event::EventType eventType, std::function<void(sf::Event)> const& callback) {
+	_enginePtr->setEventCallback(eventType, callback);
 }
 
 void gloutrobate::GameObject::updatePositionFromPhysics() {
@@ -53,4 +56,5 @@ b2Body* gloutrobate::GameObject::getBody() const {
 }
 void gloutrobate::GameObject::setBody(b2Body* b) {
 	_body = b;
+	_body->GetUserData().pointer = std::bit_cast<uintptr_t>(this);
 }

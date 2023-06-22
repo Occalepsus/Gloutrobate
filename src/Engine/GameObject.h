@@ -1,19 +1,19 @@
 #pragma once
 
-#include <unordered_map>
 #include <functional>
 #include <SFML/Graphics.hpp>
 #include "box2d/box2d.h"
 
 namespace gloutrobate {
+	class Engine;
+
 	class GameObject {
 	private:
+		Engine* _enginePtr{ nullptr };
 		sf::Vector2f _pos;
 		sf::Vector2f _size;
 		sf::Texture const _texture;
 		b2Body* _body{ nullptr };
-
-		std::unordered_map<sf::Event::EventType, std::function<void(sf::Event)>> _eventCallbacks;
 
 	public:
 		GameObject() = default;
@@ -21,11 +21,8 @@ namespace gloutrobate {
 		GameObject(sf::Vector2f const& initialPosition, sf::Vector2f const& size, sf::Texture const& gameObjectTexture);
 		virtual ~GameObject() = default;
 
-		template <typename T>
-		void setEventCallback(sf::Event::EventType eventType, T callback) {
-			_eventCallbacks[eventType] = callback;
-		}
-		void handleEvent(sf::Event const& event);
+		void setGameEngine(Engine* enginePtr);
+		void setEventCallback(sf::Event::EventType eventType, std::function<void(sf::Event)> const& callback);
 
 		void updatePositionFromPhysics();
 		virtual void start() { /* Default GameObject does start nothing */ };

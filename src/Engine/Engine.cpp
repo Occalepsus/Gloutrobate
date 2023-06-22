@@ -2,6 +2,7 @@
 
 void gloutrobate::Engine::addGameObject(std::shared_ptr<GameObject> gameObjectPtr, bool isDynamic) {
 	_gameObjects.push_back(gameObjectPtr);
+	gameObjectPtr->setGameEngine(this);
 	if (isDynamic) {
 		_physicEngine.createDynamicBody(gameObjectPtr, 1.0f);
 	}
@@ -16,6 +17,10 @@ void gloutrobate::Engine::drawOnFrame(sf::Drawable* drawable) {
 
 void gloutrobate::Engine::setContactListener(b2ContactListener* contactListenerPtr) {
 	_physicEngine.setContactListener(contactListenerPtr);
+}
+
+void gloutrobate::Engine::setEventCallback(sf::Event::EventType eventType, std::function<void(sf::Event)> const& callback) {
+	_graphicEngine.setEventCallback(eventType, callback);
 }
 
 bool gloutrobate::Engine::runFrame() {
