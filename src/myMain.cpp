@@ -8,7 +8,7 @@
 
 int myMain() {
     // Setup game engine
-    auto game = std::make_unique<gloutrobate::Engine>("Gloutobate", 1920, 1080, 60.0f, 60.0f);
+    auto game = std::make_unique<gloutrobate::Engine>("Gloutrobate", 1920, 1080, 60.0f, 60.0f);
 
     // Get and setup Map
     int sel{ 1 };
