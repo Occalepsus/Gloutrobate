@@ -10,6 +10,7 @@ namespace gloutrobate {
 	class GameObject {
 	private:
 		Engine* _enginePtr{ nullptr };
+		bool _active{ true };
 		sf::Vector2f _pos;
 		sf::Vector2f _size;
 		sf::Texture const _texture;
@@ -28,6 +29,9 @@ namespace gloutrobate {
 		virtual void start() { /* Default GameObject does start nothing */ };
 		virtual void update() { /* Default GameObject does update nothing */ };
 
+		virtual void onCollisionEnter(GameObject* other, b2Contact* contact) { /* Default GameObject does nothing on collision enter */ };
+		virtual void onCollisionExit(GameObject* other, b2Contact* contact) { /* Default GameObject does nothing on collision exit */ };
+
 		sf::Vector2f getPosition() const;
 		void setPosition(sf::Vector2f const& newPosition);
 		void setPosition(float newX, float newY);
@@ -41,5 +45,8 @@ namespace gloutrobate {
 
 		b2Body* getBody() const;
 		void setBody(b2Body* physicBodyPtr);
+
+		void setActive(bool active);
+		bool isActive() const;
 	};
 }

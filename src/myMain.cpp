@@ -5,11 +5,10 @@
 
 #include "Engine/Engine.h"
 #include "Player.h"
-#include "PlayerContact.h"
 
 int myMain() {
     // Setup game engine
-    auto game = std::make_unique<gloutrobate::Engine>("Gloutobate", 1920, 1080, 60.0f, 60);
+    auto game = std::make_unique<gloutrobate::Engine>("Gloutobate", 1920, 1080, 60.0f, 60.0f);
 
     // Get and setup Map
     int sel{ 1 };
@@ -49,14 +48,6 @@ int myMain() {
     auto player2 = std::make_shared<Player>(startingPos[1], sf::Vector2f(1.0f, 1.5f), textureP2);
     player2->setKeys(sf::Keyboard::Up, sf::Keyboard::Left, sf::Keyboard::Down, sf::Keyboard::Right);
     game->addGameObject(player2, true);
-
-    PlayerContact playerContact{};
-    playerContact.setPlayer1(player1);
-    playerContact.setPlayer2(player2);
-    playerContact.setPlatforms(platformPtrs);
-    playerContact.setCakes(cakePtrs);
-
-    game->setContactListener(&playerContact);
 
     // Setup for the scores
     sf::Font font{};

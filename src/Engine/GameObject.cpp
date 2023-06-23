@@ -58,3 +58,11 @@ void gloutrobate::GameObject::setBody(b2Body* b) {
 	_body = b;
 	_body->GetUserData().pointer = std::bit_cast<uintptr_t>(this);
 }
+
+void gloutrobate::GameObject::setActive(bool active) {
+	this->_active = active;
+	_body->SetAwake(active);
+}
+bool gloutrobate::GameObject::isActive() const {
+	return _active;
+}

@@ -30,7 +30,6 @@ namespace gloutrobate {
 
 		void addGameObject(std::shared_ptr<gloutrobate::GameObject> gameObjectPtr, bool isDynamic = false);
 		void drawOnFrame(sf::Drawable* drawablePtr);
-		void setContactListener(b2ContactListener* contactListenerPtr);
 		void setEventCallback(sf::Event::EventType eventType, std::function<void(sf::Event)> const& callback);
 
 		template<typename T>

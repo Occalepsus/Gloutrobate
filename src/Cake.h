@@ -11,9 +11,10 @@ private :
 public:
 	explicit Cake(sf::Vector2f pos) : GameObject(pos, sf::Vector2f(0.5,0.5), getCakeTexture()) {};
 	
-	void eat() { _eaten = true; }
+	void eat();
 	bool isEaten() const { return _eaten; }
 
 	void start() override;
-	void update() override;
+
+	void onCollisionEnter(GameObject* other, b2Contact* contact) override;
 };

@@ -23,17 +23,20 @@ bool gloutrobate::Graphics::drawFrame(std::span<std::shared_ptr<GameObject>> con
 	}
 
 	for (auto const& gameObject : gameObjects) {
-		sf::Sprite sprite;
-		sprite.setTexture(gameObject->getTexture());
-		sf::Vector2f spriteSize{
-			gameObject->getSize().x * _pixelsPerMeter / (float)gameObject->getTexture().getSize().x,
-			gameObject->getSize().y * _pixelsPerMeter / (float)gameObject->getTexture().getSize().y
-		};
-		sprite.setScale(spriteSize);
-		sprite.setOrigin(spriteSize / 2.0f);
-		sprite.setPosition(gameObject->getPosition().x * _pixelsPerMeter, static_cast<float>(_renderWindow.getSize().y) - gameObject->getPosition().y * _pixelsPerMeter);
+		if (gameObject->isActive()) {
+			// TODO: change that
+			sf::Sprite sprite;
+			sprite.setTexture(gameObject->getTexture());
+			sf::Vector2f spriteSize{
+				gameObject->getSize().x* _pixelsPerMeter / (float)gameObject->getTexture().getSize().x,
+					gameObject->getSize().y* _pixelsPerMeter / (float)gameObject->getTexture().getSize().y
+			};
+			sprite.setScale(spriteSize);
+			sprite.setOrigin(spriteSize / 2.0f);
+			sprite.setPosition(gameObject->getPosition().x * _pixelsPerMeter, static_cast<float>(_renderWindow.getSize().y) - gameObject->getPosition().y * _pixelsPerMeter);
 
-		_renderWindow.draw(sprite);
+			_renderWindow.draw(sprite);
+		}
 	}
 	for (auto const& drawable : _drawables) {
 		_renderWindow.draw(*drawable);

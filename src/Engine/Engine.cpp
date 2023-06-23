@@ -15,10 +15,6 @@ void gloutrobate::Engine::drawOnFrame(sf::Drawable* drawable) {
 	_graphicEngine.addDrawableForOneFrame(drawable);
 }
 
-void gloutrobate::Engine::setContactListener(b2ContactListener* contactListenerPtr) {
-	_physicEngine.setContactListener(contactListenerPtr);
-}
-
 void gloutrobate::Engine::setEventCallback(sf::Event::EventType eventType, std::function<void(sf::Event)> const& callback) {
 	_graphicEngine.setEventCallback(eventType, callback);
 }

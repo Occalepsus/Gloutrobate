@@ -33,6 +33,9 @@ public:
 	void start() override;
 	void update() override;
 
+	void onCollisionEnter(GameObject* other, b2Contact* contact) override;
+	void onCollisionExit(GameObject* other, b2Contact* contact) override;
+
 	virtual void onKeyPressed(sf::Event e);
 
 	void incrScore() { _score++; };
