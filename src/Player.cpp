@@ -13,12 +13,12 @@ void Player::start() {
 }
 
 void Player::update() {
-    if (std::abs(getBody()->GetLinearVelocity().x) < 8) {
+    if (std::abs(getBody()->GetLinearVelocity().x) < 6) {
         if (sf::Keyboard::isKeyPressed(_leftKey)) {
-            getBody()->ApplyLinearImpulseToCenter(b2Vec2(-0.6f, 0), true);
+            getBody()->ApplyLinearImpulseToCenter(b2Vec2(-0.4f, 0), true);
         }
         if (sf::Keyboard::isKeyPressed(_rightKey)) {
-            getBody()->ApplyLinearImpulseToCenter(b2Vec2(0.6f, 0), true);
+            getBody()->ApplyLinearImpulseToCenter(b2Vec2(0.4f, 0), true);
         }
     }
 
@@ -48,7 +48,7 @@ void Player::onCollisionExit(GameObject* other, b2Contact* contact) {
 
 void Player::onKeyPressed(sf::Event e) {
     if (_canJump && e.key.code == _upKey) {
-        getBody()->ApplyLinearImpulseToCenter(b2Vec2(0.0f, 12), true);
+        getBody()->ApplyLinearImpulseToCenter(b2Vec2(0.0f, 11), true);
         _canJump = false;
     }
 }

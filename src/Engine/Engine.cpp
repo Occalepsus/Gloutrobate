@@ -22,7 +22,7 @@ void gloutrobate::Engine::setEventCallback(sf::Event::EventType eventType, std::
 bool gloutrobate::Engine::runFrame() {
 	// 1- update whole engine (called before)
 
-	const auto frameStart = std::chrono::steady_clock::now();
+	//const auto frameStart = std::chrono::steady_clock::now();
 
 	// 2- update physics
 	_physicEngine.update(_gameObjects);
@@ -32,7 +32,7 @@ bool gloutrobate::Engine::runFrame() {
 		gameObjectPtr->update();
 	}
 
-	std::this_thread::sleep_until(frameStart + _millisecondsPerFrame);
+	//std::this_thread::sleep_until(frameStart + _millisecondsPerFrame);
 
 	// 4- draw frame, call event handlers on all gameObjects
 	return _graphicEngine.drawFrame(_gameObjects);
