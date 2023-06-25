@@ -1,14 +1,5 @@
 #include "Cake.h"
 
-// TODO: Change that
-sf::Texture Cake::getCakeTexture() const {
-	sf::Texture texture_cake;
-	if (!texture_cake.loadFromFile("./resources/gateau.png")) {
-		exit(1);
-	}
-	return texture_cake;
-}
-
 void Cake::eat() {
 	_eaten = true;
 	setActive(false);

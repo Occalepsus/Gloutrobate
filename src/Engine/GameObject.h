@@ -13,11 +13,11 @@ namespace gloutrobate {
 		bool _active{ true };
 		sf::Vector2f _pos;
 		sf::Vector2f _size;
-		sf::Texture const _texture;
+		sf::Sprite _sprite;
 		b2Body* _body{ nullptr };
 
 	public:
-		GameObject() = default;
+		GameObject() = delete;
 		explicit GameObject(sf::Texture const& gameObjectTexture);
 		GameObject(sf::Vector2f const& initialPosition, sf::Vector2f const& size, sf::Texture const& gameObjectTexture);
 		virtual ~GameObject() = default;
@@ -41,7 +41,7 @@ namespace gloutrobate {
 
 		sf::Vector2f getSize() const;
 
-		sf::Texture const& getTexture() const;
+		sf::Sprite getSprite() const;
 
 		b2Body* getBody() const;
 		void setBody(b2Body* physicBodyPtr);

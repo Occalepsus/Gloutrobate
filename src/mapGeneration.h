@@ -8,12 +8,15 @@
 #include "Cake.h"
 #include <array>
 
-using list_platforms = std::vector<Platform>;
-using list_cakes = std::vector<Cake>;
-
 class Map {
+private:
+	int _seed;
+
 public : 
-	list_platforms generation(int selection) const;
-	list_cakes generationCakes(int selection) const;
-	std::vector<sf::Vector2f> getStartingPosition(int selection) const;
+	Map() = delete;
+	explicit Map(int seed) : _seed{ seed } {};
+
+	std::vector<sf::Vector2f> getPlatformPositions() const;
+	std::vector<sf::Vector2f> getCakePositions() const;
+	std::vector<sf::Vector2f> getStartingPositions() const;
 };

@@ -2,12 +2,10 @@
 
 #include "Engine/GameObject.h"
 
+// TODO: Remove this class and use GameObject instead after adding tags to GameObject
 class Platform : public gloutrobate::GameObject {
 private:
-	sf::Texture getPlatformTexture() const;
-
 	using GameObject::GameObject;
 
 public:
-	explicit Platform(sf::Vector2f pos) : GameObject(pos, sf::Vector2f(3, 1), getPlatformTexture()) {};
 };

@@ -9,7 +9,6 @@
 #include "Player.h"
 #include "Platform.h"
 #include "Cake.h"
-#include "PlayerContact.h"
 
 using namespace gloutrobate;
 
@@ -117,14 +116,6 @@ TEST(GameObject, GameObjectCreation) {
 		std::make_shared<Platform>(sf::Vector2f(0, 0))
 	};
 	game->addGameObject(gameObjects[0]);
-
-	PlayerContact playerContact{};
-	playerContact.setPlayer1(player);
-	playerContact.setPlayer2(player);
-	playerContact.setPlatforms(gameObjects);
-	playerContact.setCakes(std::vector<std::shared_ptr<Cake>>());
-
-	game->setContactListener(&playerContact);
 
 	game->start([]() { return true; });
 }

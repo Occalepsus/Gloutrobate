@@ -11,22 +11,32 @@ int myMain() {
     auto game = std::make_unique<gloutrobate::Engine>("Gloutrobate", 1920, 1080, 60.0f, 60.0f);
 
     // Get and setup Map
-    int sel{ 1 };
+    Map map{ 1 };
 
-    Map map{};
+    sf::Vector2f platformSize{ 3, 1 };
+    sf::Texture platformTexture;
+    if (!platformTexture.loadFromFile("./resources/platform.png")) {
+        exit(1);
+    }
+    sf::Vector2f cakeSize{ 0.5f, 0.5f };
+    sf::Texture cakeTexture;
+    if (!cakeTexture.loadFromFile("./resources/gateau.png")) {
+        exit(1);
+    }
+
     std::vector<std::shared_ptr<Platform>> platformPtrs{};
-    for (auto& element : map.generation(sel)) {
-        platformPtrs.emplace_back(std::make_shared<Platform>(element));
+    for (auto const& pos: map.getPlatformPositions()) {
+        platformPtrs.emplace_back(std::make_shared<Platform>(pos, platformSize, platformTexture));
         game->addGameObject(platformPtrs.back(), false);
     }
     std::vector<std::shared_ptr<Cake>> cakePtrs{};
-    for (auto& element : map.generationCakes(sel)) {
-        cakePtrs.emplace_back(std::make_shared<Cake>(element));
+    for (auto& pos : map.getCakePositions()) {
+        cakePtrs.emplace_back(std::make_shared<Cake>(pos, cakeSize, cakeTexture));
         game->addGameObject(cakePtrs.back(), false);
     }
 
     // Create players
-    auto startingPos{ map.getStartingPosition(sel) };
+    auto startingPos{ map.getStartingPositions() };
     if (startingPos.size() != 2) {
         exit(1);
     }
