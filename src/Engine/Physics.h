@@ -27,9 +27,9 @@ namespace gloutrobate {
 			_timeStep{ 1.0f / fps }, _velocityIterations{ velocityIterations }, _positionIterations{ positionIterations } 
 		{ setupContactListener(); };
 
-		void update(std::span<std::shared_ptr<GameObject>> const& gameObjects);
+		void update(std::span<GameObject*> const& gameObjects);
 
-		void createDynamicBody(std::shared_ptr<GameObject> gameObjectPtr, float mass);
-		void createStaticBody(std::shared_ptr<GameObject> gameObjectPtr);
+		void createDynamicBody(GameObject* gameObjectPtr, float mass);
+		void createStaticBody(GameObject* gameObjectPtr);
 	};
 }

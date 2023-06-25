@@ -24,15 +24,15 @@ int myMain() {
         exit(1);
     }
 
-    std::vector<std::shared_ptr<Platform>> platformPtrs{};
+    std::vector<std::unique_ptr<Platform>> platformPtrs{};
     for (auto const& pos: map.getPlatformPositions()) {
-        platformPtrs.emplace_back(std::make_shared<Platform>(pos, platformSize, platformTexture));
-        game->addGameObject(platformPtrs.back(), false);
+        platformPtrs.emplace_back(std::make_unique<Platform>(pos, platformSize, platformTexture));
+        game->addGameObject(platformPtrs.back().get(), false);
     }
-    std::vector<std::shared_ptr<Cake>> cakePtrs{};
+    std::vector<std::unique_ptr<Cake>> cakePtrs{};
     for (auto& pos : map.getCakePositions()) {
-        cakePtrs.emplace_back(std::make_shared<Cake>(pos, cakeSize, cakeTexture));
-        game->addGameObject(cakePtrs.back(), false);
+        cakePtrs.emplace_back(std::make_unique<Cake>(pos, cakeSize, cakeTexture));
+        game->addGameObject(cakePtrs.back().get(), false);
     }
 
     // Create players
@@ -46,18 +46,18 @@ int myMain() {
     if (!textureP1.loadFromFile("./resources/Player.png")) {
         exit(1);
     }
-    auto player1 = std::make_shared<Player>(startingPos[0], sf::Vector2f(1.0f, 1.5f), textureP1);
+    auto player1{ std::make_unique<Player>(startingPos[0], sf::Vector2f(1.0f, 1.5f), textureP1) };
     player1->setKeys(sf::Keyboard::Z, sf::Keyboard::Q, sf::Keyboard::S, sf::Keyboard::D);
-    game->addGameObject(player1, true);
+    game->addGameObject(player1.get(), true);
 
     // Player 2
     sf::Texture textureP2{};
     if (!textureP2.loadFromFile("./resources/Player2.png")) {
         exit(1);
     }
-    auto player2 = std::make_shared<Player>(startingPos[1], sf::Vector2f(1.0f, 1.5f), textureP2);
+    auto player2{ std::make_unique<Player>(startingPos[1], sf::Vector2f(1.0f, 1.5f), textureP2) };
     player2->setKeys(sf::Keyboard::Up, sf::Keyboard::Left, sf::Keyboard::Down, sf::Keyboard::Right);
-    game->addGameObject(player2, true);
+    game->addGameObject(player2.get(), true);
 
     // Setup for the scores
     sf::Font font{};

@@ -50,8 +50,8 @@ TEST(GameEngine, KeyPressFromKeyBoard) {
 TEST(GameEngine, KeyPressFromKeyEvent) {
 	auto game = std::make_unique<Engine>("Test", 800, 600, 60);
 
-	auto player{ std::make_shared<TestPlayer>() };
-	game->addGameObject(player);
+	auto player{ std::make_unique<TestPlayer>() };
+	game->addGameObject(player.get());
 
 	sf::Font font{};
 	ASSERT_TRUE(font.loadFromFile("./resources/ARIAL.TTF"));
@@ -94,8 +94,8 @@ TEST(Player, Players_body_moves) {
 	sf::Vector2f move(100.f, 0.f);
 	sf::Texture text{};
 	ASSERT_TRUE(text.loadFromFile("./resources/Player.png"));
-	auto player = std::make_shared<Player>(initialPosition, sf::Vector2f(1, 1), text);
-	game->addGameObject(player, true);
+	auto player = std::make_unique<Player>(initialPosition, sf::Vector2f(1, 1), text);
+	game->addGameObject(player.get(), true);
 	player->move(move);
 	game->start([&player]() {
 		std::cout << player->getBody()->GetTransform().p.x << " " << player->getBody()->GetTransform().p.y << "\n";
@@ -107,15 +107,15 @@ TEST(GameObject, GameObjectCreation) {
 
 	sf::Texture text{};
 	ASSERT_TRUE(text.loadFromFile("./resources/Player.png"));
-	auto player{ std::make_shared<Player>(sf::Vector2f(0, 2), sf::Vector2f(1, 1), text) };
+	auto player{ std::make_unique<Player>(sf::Vector2f(0, 2), sf::Vector2f(1, 1), text) };
 	player->setKeys(sf::Keyboard::Z, sf::Keyboard::Q, sf::Keyboard::S, sf::Keyboard::D);
 
-	game->addGameObject(player, true);
+	game->addGameObject(player.get(), true);
 
-	std::vector<std::shared_ptr<Platform>> gameObjects{
-		std::make_shared<Platform>(sf::Vector2f(0, 0))
+	std::vector<std::unique_ptr<Platform>> gameObjects{
+		std::make_unique<Platform>(sf::Vector2f(0, 0))
 	};
-	game->addGameObject(gameObjects[0]);
+	game->addGameObject(gameObjects[0].get());
 
 	game->start([]() { return true; });
 }

@@ -5,7 +5,7 @@ gloutrobate::Graphics::Graphics(std::string const& name, int width, int height, 
 	_renderWindow.setKeyRepeatEnabled(false);
 }
 
-bool gloutrobate::Graphics::drawFrame(std::span<std::shared_ptr<GameObject>> const& gameObjects) {
+bool gloutrobate::Graphics::drawFrame(std::span<GameObject*> const& gameObjects) {
 	_renderWindow.clear();
 	
 	sf::Event rwEvent;
@@ -22,9 +22,9 @@ bool gloutrobate::Graphics::drawFrame(std::span<std::shared_ptr<GameObject>> con
 		}
 	}
 
-	for (auto const& gameObject : gameObjects) {
-		if (gameObject->isActive()) {
-			auto sprite{ gameObject->getSprite() };
+	for (auto gameObjectPtr : gameObjects) {
+		if (gameObjectPtr->isActive()) {
+			auto sprite{ gameObjectPtr->getSprite() };
 			sprite.setPosition(_pixelsPerMeter * sprite.getPosition().x, (float)_renderWindow.getSize().y - _pixelsPerMeter * sprite.getPosition().y);
 			sprite.scale(_pixelsPerMeter, _pixelsPerMeter);
 

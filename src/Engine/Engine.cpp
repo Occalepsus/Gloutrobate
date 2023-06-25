@@ -1,6 +1,6 @@
 #include "Engine.h"
 
-void gloutrobate::Engine::addGameObject(std::shared_ptr<GameObject> gameObjectPtr, bool isDynamic) {
+void gloutrobate::Engine::addGameObject(GameObject* gameObjectPtr, bool isDynamic) {
 	_gameObjects.push_back(gameObjectPtr);
 	gameObjectPtr->setGameEngine(this);
 	if (isDynamic) {
@@ -28,7 +28,9 @@ bool gloutrobate::Engine::runFrame() {
 	_physicEngine.update(_gameObjects);
 
 	// 3- call update on all gameObjects
-	std::ranges::for_each(_gameObjects.begin(), _gameObjects.end(), [](std::shared_ptr<GameObject> go) { go->update(); });
+	for (auto& gameObjectPtr : _gameObjects) {
+		gameObjectPtr->update();
+	}
 
 	std::this_thread::sleep_until(frameStart + _millisecondsPerFrame);
 

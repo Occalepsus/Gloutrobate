@@ -29,7 +29,7 @@ namespace gloutrobate {
 			_eventCallbacks.insert(std::make_pair(eventType, callback));
 		}
 
-		bool drawFrame(std::span<std::shared_ptr<GameObject>> const& gameObjects);
+		bool drawFrame(std::span<GameObject*> const& gameObjects);
 
 		// Should be called before drawFrame, only for texts or other custom drawables
 		void addDrawableForOneFrame(sf::Drawable* drawablePtr);
