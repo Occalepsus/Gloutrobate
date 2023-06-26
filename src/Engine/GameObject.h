@@ -49,7 +49,6 @@ namespace gloutrobate {
 		b2Body* getBody() const;
 		void setBody(b2Body* physicBodyPtr);
 
-		// TODO: Fix inactive objects still being triggered by collisions
 		void setActive(bool active);
 		bool isActive() const;
 

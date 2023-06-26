@@ -23,6 +23,10 @@ void gloutrobate::GameObject::setEventCallback(sf::Event::EventType eventType, s
 }
 
 void gloutrobate::GameObject::updatePositionFromPhysics() {
+	if (_active != _body->IsEnabled()) {
+		_body->SetEnabled(_active);
+	}
+
 	if (_body != nullptr) {
 		_pos.x = _body->GetPosition().x - _size.x / 2;
 		_pos.y = _body->GetPosition().y + _size.y / 2;
@@ -69,7 +73,6 @@ void gloutrobate::GameObject::setBody(b2Body* b) {
 
 void gloutrobate::GameObject::setActive(bool active) {
 	this->_active = active;
-	_body->SetAwake(active);
 }
 bool gloutrobate::GameObject::isActive() const {
 	return _active;
