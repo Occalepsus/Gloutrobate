@@ -1,10 +1,14 @@
-#include <SFML/Graphics.hpp>
-#include <iostream>
-#include "mapGeneration.h"
 #include "myMain.h"
 
+#include <memory>
+#include <SFML/Graphics.hpp>
+
+#include "mapGeneration.h"
+
 #include "Engine/Engine.h"
+#include "Engine/GameObject.h"
 #include "Player.h"
+#include "Cake.h"
 
 int myMain() {
     // Setup game engine
@@ -24,10 +28,11 @@ int myMain() {
         exit(1);
     }
 
-    std::vector<std::unique_ptr<Platform>> platformPtrs{};
+    std::vector<std::unique_ptr<gloutrobate::GameObject>> platformPtrs{};
     for (auto const& pos: map.getPlatformPositions()) {
-        platformPtrs.emplace_back(std::make_unique<Platform>(pos, platformSize, platformTexture));
+        platformPtrs.emplace_back(std::make_unique<gloutrobate::GameObject>(pos, platformSize, platformTexture));
         game->addGameObject(platformPtrs.back().get(), false);
+        platformPtrs.back()->setTag("Platform");
     }
     std::vector<std::unique_ptr<Cake>> cakePtrs{};
     for (auto& pos : map.getCakePositions()) {

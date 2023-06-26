@@ -10,6 +10,7 @@ void Player::setKeys(sf::Keyboard::Key upKey, sf::Keyboard::Key leftKey, sf::Key
 void Player::start() {
     setEventCallback(sf::Event::EventType::KeyPressed, [this](sf::Event e) { onKeyPressed(e); });
     getBody()->SetLinearDamping(1);
+    setTag("Player");
 }
 
 void Player::update() {
@@ -32,18 +33,18 @@ void Player::update() {
 }
 
 void Player::onCollisionEnter(GameObject* other, b2Contact* contact) {
-    if (dynamic_cast<Platform*>(other)) {
+    if (other->getTag() == "Platform") {
         _canJump = true;
+    }
+    else if (other->getTag() == "Cake") {
+        incrScore();
     }
 }
 
 void Player::onCollisionExit(GameObject* other, b2Contact* contact) {
-    if (dynamic_cast<Platform*>(other)) {
+    if (other->getTag() == "Platform") {
 		_canJump = false;
 	}
-    else if (dynamic_cast<Cake*>(other)) {
-        incrScore();
-    }
 }
 
 void Player::onKeyPressed(sf::Event e) {

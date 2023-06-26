@@ -7,8 +7,11 @@ void Cake::eat() {
 
 void Cake::start() {
 	getBody()->GetFixtureList()->SetSensor(true);
+	setTag("Cake");
 }
 
 void Cake::onCollisionEnter(GameObject* other, b2Contact* contact) {
-	eat();
+	if (other->getTag() == "Player") {
+		eat();
+	}
 }

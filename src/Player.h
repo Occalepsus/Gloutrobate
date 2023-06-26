@@ -3,7 +3,6 @@
 #include <SFML/Graphics.hpp>
 
 #include "Engine/GameObject.h"
-#include "Platform.h"
 #include "Cake.h"
 
 class Player : public gloutrobate::GameObject {
@@ -18,15 +17,11 @@ private:
 	bool _canJump{ true };
 
 	uint8 _score{ 0 };
-	std::vector<std::shared_ptr<Platform>> _platforms;
-	std::vector<std::shared_ptr<Cake>> _cakes;
 
 public:
 	Player(sf::Vector2f pos, sf::Vector2f size, sf::Texture const& text) : GameObject(pos, size, text), _initPos{ pos } {};
 
 	void setKeys(sf::Keyboard::Key upKey, sf::Keyboard::Key leftKey, sf::Keyboard::Key downKey, sf::Keyboard::Key rightKey);
-	void setPlatforms(std::vector<std::shared_ptr<Platform>> const& platforms) { _platforms = platforms; };
-	void setCakes(std::vector<std::shared_ptr<Cake>> const& cakes) { _cakes = cakes; };
 
 	void resetJump(bool jump = true) { _canJump = jump; }
 

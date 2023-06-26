@@ -1,13 +1,6 @@
 #include "mapGeneration.h"
-#include "Engine/Engine.h"
-#include "Platform.h"
-#include "Cake.h"
-#include <random>
-#include <cmath>
 #include <vector>
 #include <array>
-
-using namespace gloutrobate;
 
 //This function is used to generate the platforms of the map selected
 std::vector<sf::Vector2f> Map::getPlatformPositions() const {

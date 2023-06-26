@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string_view>
 #include <functional>
 #include <SFML/Graphics.hpp>
 #include "box2d/box2d.h"
@@ -15,6 +16,8 @@ namespace gloutrobate {
 		sf::Vector2f _size;
 		sf::Sprite _sprite;
 		b2Body* _body{ nullptr };
+
+		std::string_view _tag{ "GameObject" };
 
 	public:
 		GameObject() = delete;
@@ -46,7 +49,11 @@ namespace gloutrobate {
 		b2Body* getBody() const;
 		void setBody(b2Body* physicBodyPtr);
 
+		// TODO: Fix inactive objects still being triggered by collisions
 		void setActive(bool active);
 		bool isActive() const;
+
+		void setTag(std::string_view const& tag);
+		std::string_view getTag() const;
 	};
 }

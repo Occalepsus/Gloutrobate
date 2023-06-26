@@ -74,3 +74,10 @@ void gloutrobate::GameObject::setActive(bool active) {
 bool gloutrobate::GameObject::isActive() const {
 	return _active;
 }
+
+void gloutrobate::GameObject::setTag(std::string_view const& tag) {
+	_tag = tag;
+}
+std::string_view gloutrobate::GameObject::getTag() const {
+	return _tag;
+}

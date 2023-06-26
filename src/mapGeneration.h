@@ -1,12 +1,7 @@
 #pragma once
 
-#include <iostream>
-#include <string>
-#include <random>
-#include "Engine/Engine.h"
-#include "Platform.h"
-#include "Cake.h"
 #include <array>
+#include <SFML/Graphics.hpp>
 
 class Map {
 private:

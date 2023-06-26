@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Engine/GameObject.h"
+
 class Cake : public gloutrobate::GameObject {
 private :
 	bool _eaten{ false };
