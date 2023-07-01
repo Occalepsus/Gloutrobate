@@ -1,17 +1,9 @@
 #pragma once
 
-#include "Engine/GameObject.h"
-
-class Cake : public gloutrobate::GameObject {
+#include "Item.h"
+class Cake : public Item {
 private :
-	bool _eaten{ false };
-
-	using GameObject::GameObject;
-public:	
-	void eat();
-	bool isEaten() const { return _eaten; }
-
 	void start() override;
-
-	void onCollisionEnter(GameObject* other, b2Contact* contact) override;
+public:
+	explicit Cake(sf::Vector2f pos, sf::Texture const& text) : Item(pos, sf::Vector2f(0.5,0.5), text) {};
 };

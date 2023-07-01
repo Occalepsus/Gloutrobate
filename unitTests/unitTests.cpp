@@ -9,7 +9,6 @@
 #include "Engine/Engine.h"
 #include "TestPlayer.h"
 #include "Player.h"
-#include "Platform.h"
 #include "Cake.h"
 
 using namespace gloutrobate;

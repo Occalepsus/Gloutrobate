@@ -7,10 +7,7 @@ private:
 	bool _eaten{ false };
 
 	using GameObject::GameObject;
-	
-protected:
 
-	sf::Texture getItemTexture() const;
 public:
 	void eat();
 	bool isEaten() const { return _eaten; }

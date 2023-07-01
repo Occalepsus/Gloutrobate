@@ -9,6 +9,7 @@
 #include "Engine/GameObject.h"
 #include "Player.h"
 #include "Cake.h"
+#include "Bonus.h"
 
 int myMain() {
     // Setup game engine
@@ -22,11 +23,6 @@ int myMain() {
     if (!platformTexture.loadFromFile("./resources/platform.png")) {
         exit(1);
     }
-    sf::Vector2f cakeSize{ 0.5f, 0.5f };
-    sf::Texture cakeTexture;
-    if (!cakeTexture.loadFromFile("./resources/gateau.png")) {
-        exit(1);
-    }
 
     std::vector<std::unique_ptr<gloutrobate::GameObject>> platformPtrs{};
     for (auto const& pos: map.getPlatformPositions()) {
@@ -34,12 +30,19 @@ int myMain() {
         game->addGameObject(platformPtrs.back().get(), false);
         platformPtrs.back()->setTag("Platform");
     }
+
+    sf::Texture texture_cake{};
+    if (!texture_cake.loadFromFile("./resources/gateau.png")) {
+        exit(1);
+    }
     std::vector<std::unique_ptr<Cake>> cakePtrs{};
     for (auto& pos : map.getCakePositions()) {
-        cakePtrs.emplace_back(std::make_unique<Cake>(pos, cakeSize, cakeTexture));
+        cakePtrs.emplace_back(std::make_unique<Cake>(pos,texture_cake));
         game->addGameObject(cakePtrs.back().get(), false);
     }
-
+    std::vector<std::unique_ptr<Bonus>> bonusPtr{};
+    bonusPtr.emplace_back(std::make_unique<Bonus>(sf::Vector2f(6., 6.),texture_cake, Bonus::BonusType::jumpBonus));
+    game->addGameObject(bonusPtr.back().get(), false);
     // Create players
     auto startingPos{ map.getStartingPositions() };
     if (startingPos.size() != 2) {
