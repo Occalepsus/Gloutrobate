@@ -42,8 +42,16 @@ void Player::onCollisionEnter(GameObject* other, b2Contact* contact) {
 }
 
 void Player::onCollisionExit(GameObject* other, b2Contact* contact) {
-    if (other->getTag() == "Platform") {
-		_canJump = false;
+    if (other->getTag() == "Platform" && getBody()->GetContactList()) {
+        bool isStillOnFloor{ false };
+        for (auto c{ getBody()->GetContactList() }; c && !isStillOnFloor; c = c->next) {
+            // Foreach contact, check if it is touching a platform
+            if (c->contact->IsTouching() && ((GameObject*)c->other->GetUserData().pointer)->getTag() == "Platform") {
+                isStillOnFloor = true;
+            }
+        }
+        // Is touching a platform, can jump
+        _canJump = isStillOnFloor;
 	}
 }
 

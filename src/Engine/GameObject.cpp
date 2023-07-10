@@ -79,7 +79,9 @@ bool gloutrobate::GameObject::isActive() const {
 }
 
 void gloutrobate::GameObject::setTag(std::string_view const& tag) {
-	_tag = tag;
+	if (!tag.empty()) {
+		_tag = tag;
+	}
 }
 std::string_view gloutrobate::GameObject::getTag() const {
 	return _tag;
