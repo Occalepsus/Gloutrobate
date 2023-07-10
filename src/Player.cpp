@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Bonus.h"
 
 void Player::setKeys(sf::Keyboard::Key upKey, sf::Keyboard::Key leftKey, sf::Keyboard::Key downKey, sf::Keyboard::Key rightKey) {
     _upKey = upKey;
@@ -14,7 +15,7 @@ void Player::start() {
 }
 
 void Player::update() {
-    if (std::abs(getBody()->GetLinearVelocity().x) < 6) {
+    if (std::abs(getBody()->GetLinearVelocity().x) < maxSpeed) {
         if (sf::Keyboard::isKeyPressed(_leftKey)) {
             getBody()->ApplyLinearImpulseToCenter(b2Vec2(-0.4f, 0), true);
         }
@@ -31,6 +32,16 @@ void Player::update() {
         }
 	}
 }
+void Player::applyBonus(Bonus::BonusType bonus) {
+    switch (bonus) {
+    case Bonus::BonusType::speedBonus:
+        maxSpeed += 1;
+        break;
+    case Bonus::BonusType::jumpBonus:
+        maxJump += 2;
+        break;
+    }
+}
 
 void Player::onCollisionEnter(GameObject* other, b2Contact* contact) {
     if (other->getTag() == "Platform") {
@@ -38,6 +49,9 @@ void Player::onCollisionEnter(GameObject* other, b2Contact* contact) {
     }
     else if (other->getTag() == "Cake") {
         incrScore();
+    }
+    else if (other->getTag() == "Bonus") {
+        applyBonus(dynamic_cast<Bonus*>(other)->getBonusType()); //prb avec le getter
     }
 }
 
@@ -57,7 +71,7 @@ void Player::onCollisionExit(GameObject* other, b2Contact* contact) {
 
 void Player::onKeyPressed(sf::Event e) {
     if (_canJump && e.key.code == _upKey) {
-        getBody()->ApplyLinearImpulseToCenter(b2Vec2(0.0f, 11), true);
+        getBody()->ApplyLinearImpulseToCenter(b2Vec2(0.0f, maxJump), true);
         _canJump = false;
     }
 }

@@ -4,6 +4,7 @@
 
 #include "Engine/GameObject.h"
 #include "Cake.h"
+#include <Bonus.h>
 
 class Player : public gloutrobate::GameObject {
 private:
@@ -17,6 +18,8 @@ private:
 	bool _canJump{ true };
 
 	uint8 _score{ 0 };
+	float maxSpeed = 6;
+	float maxJump = 11;
 
 public:
 	Player(sf::Vector2f pos, sf::Vector2f size, sf::Texture const& text) : GameObject(pos, size, text), _initPos{ pos } {};
@@ -27,6 +30,8 @@ public:
 
 	void start() override;
 	void update() override;
+
+	void applyBonus(Bonus::BonusType bonus);
 
 	void onCollisionEnter(GameObject* other, b2Contact* contact) override;
 	void onCollisionExit(GameObject* other, b2Contact* contact) override;
