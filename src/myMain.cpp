@@ -31,18 +31,24 @@ int myMain() {
         platformPtrs.back()->setTag("Platform");
     }
 
-    sf::Texture texture_cake{};
-    if (!texture_cake.loadFromFile("./resources/gateau.png")) {
+    sf::Texture cakeTexture{};
+    if (!cakeTexture.loadFromFile("./resources/gateau.png")) {
         exit(1);
     }
     std::vector<std::unique_ptr<Cake>> cakePtrs{};
     for (auto& pos : map.getCakePositions()) {
-        cakePtrs.emplace_back(std::make_unique<Cake>(pos,texture_cake));
+        cakePtrs.emplace_back(std::make_unique<Cake>(pos, cakeTexture));
         game->addGameObject(cakePtrs.back().get(), false);
     }
+
+    sf::Texture bonusTexture{};
+    if (!bonusTexture.loadFromFile("./resources/star.png")) {
+		exit(1);
+	}
     std::vector<std::unique_ptr<Bonus>> bonusPtr{};
-    bonusPtr.emplace_back(std::make_unique<Bonus>(sf::Vector2f(6., 6.),texture_cake, Bonus::BonusType::jumpBonus));
+    bonusPtr.emplace_back(std::make_unique<Bonus>(sf::Vector2f(6., 6.), bonusTexture, Bonus::BonusType::jumpBonus));
     game->addGameObject(bonusPtr.back().get(), false);
+
     // Create players
     auto startingPos{ map.getStartingPositions() };
     if (startingPos.size() != 2) {
