@@ -1,33 +1,56 @@
-#include <SFML/Graphics.hpp>
-#include <iostream>
-#include "mapGeneration.h"
 #include "myMain.h"
 
+#include <memory>
+#include <SFML/Graphics.hpp>
+
+#include "mapGeneration.h"
+
 #include "Engine/Engine.h"
+#include "Engine/GameObject.h"
 #include "Player.h"
-#include "PlayerContact.h"
+#include "Cake.h"
+#include "Bonus.h"
 
 int myMain() {
     // Setup game engine
-    auto game = std::make_unique<gloutrobate::Engine>("Gloutobate", 1920, 1080, 60.0f, 60);
+    auto game = std::make_unique<gloutrobate::Engine>("Gloutrobate", 1920, 1080, 60.0f, 60.0f);
 
     // Get and setup Map
-    int sel{ 1 };
+    Map map{ 1 };
 
-    Map map{};
-    std::vector<std::shared_ptr<Platform>> platformPtrs{};
-    for (auto& element : map.generation(sel)) {
-        platformPtrs.emplace_back(std::make_shared<Platform>(element));
-        game->addGameObject(platformPtrs.back(), false);
+    sf::Vector2f platformSize{ 3, 1 };
+    sf::Texture platformTexture;
+    if (!platformTexture.loadFromFile("./resources/platform.png")) {
+        exit(1);
     }
-    std::vector<std::shared_ptr<Cake>> cakePtrs{};
-    for (auto& element : map.generationCakes(sel)) {
-        cakePtrs.emplace_back(std::make_shared<Cake>(element));
-        game->addGameObject(cakePtrs.back(), false);
+
+    std::vector<std::unique_ptr<gloutrobate::GameObject>> platformPtrs{};
+    for (auto const& pos: map.getPlatformPositions()) {
+        platformPtrs.emplace_back(std::make_unique<gloutrobate::GameObject>(pos, platformSize, platformTexture));
+        game->addGameObject(platformPtrs.back().get(), false);
+        platformPtrs.back()->setTag("Platform");
     }
+
+    sf::Texture cakeTexture{};
+    if (!cakeTexture.loadFromFile("./resources/gateau.png")) {
+        exit(1);
+    }
+    std::vector<std::unique_ptr<Cake>> cakePtrs{};
+    for (auto& pos : map.getCakePositions()) {
+        cakePtrs.emplace_back(std::make_unique<Cake>(pos, cakeTexture));
+        game->addGameObject(cakePtrs.back().get(), false);
+    }
+
+    sf::Texture bonusTexture{};
+    if (!bonusTexture.loadFromFile("./resources/star.png")) {
+		exit(1);
+	}
+    std::vector<std::unique_ptr<Bonus>> bonusPtr{};
+    bonusPtr.emplace_back(std::make_unique<Bonus>(sf::Vector2f(6., 6.), bonusTexture, Bonus::BonusType::jumpBonus));
+    game->addGameObject(bonusPtr.back().get(), false);
 
     // Create players
-    auto startingPos{ map.getStartingPosition(sel) };
+    auto startingPos{ map.getStartingPositions() };
     if (startingPos.size() != 2) {
         exit(1);
     }
@@ -37,26 +60,18 @@ int myMain() {
     if (!textureP1.loadFromFile("./resources/Player.png")) {
         exit(1);
     }
-    auto player1 = std::make_shared<Player>(startingPos[0], sf::Vector2f(1.0f, 1.5f), textureP1);
+    auto player1{ std::make_unique<Player>(startingPos[0], sf::Vector2f(1.0f, 1.5f), textureP1) };
     player1->setKeys(sf::Keyboard::Z, sf::Keyboard::Q, sf::Keyboard::S, sf::Keyboard::D);
-    game->addGameObject(player1, true);
+    game->addGameObject(player1.get(), true);
 
     // Player 2
     sf::Texture textureP2{};
     if (!textureP2.loadFromFile("./resources/Player2.png")) {
         exit(1);
     }
-    auto player2 = std::make_shared<Player>(startingPos[1], sf::Vector2f(1.0f, 1.5f), textureP2);
+    auto player2{ std::make_unique<Player>(startingPos[1], sf::Vector2f(1.0f, 1.5f), textureP2) };
     player2->setKeys(sf::Keyboard::Up, sf::Keyboard::Left, sf::Keyboard::Down, sf::Keyboard::Right);
-    game->addGameObject(player2, true);
-
-    PlayerContact playerContact{};
-    playerContact.setPlayer1(player1);
-    playerContact.setPlayer2(player2);
-    playerContact.setPlatforms(platformPtrs);
-    playerContact.setCakes(cakePtrs);
-
-    game->setContactListener(&playerContact);
+    game->addGameObject(player2.get(), true);
 
     // Setup for the scores
     sf::Font font{};

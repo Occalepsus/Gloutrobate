@@ -1,9 +1,5 @@
 #include "Player.h"
-
-void Player::start() {
-    setEventCallback(sf::Event::EventType::KeyPressed, [this](sf::Event e) { onKeyPressed(e); });
-    getBody()->SetLinearDamping(1);
-}
+#include "Bonus.h"
 
 void Player::setKeys(sf::Keyboard::Key upKey, sf::Keyboard::Key leftKey, sf::Keyboard::Key downKey, sf::Keyboard::Key rightKey) {
     _upKey = upKey;
@@ -12,13 +8,19 @@ void Player::setKeys(sf::Keyboard::Key upKey, sf::Keyboard::Key leftKey, sf::Key
     _rightKey = rightKey;
 }
 
+void Player::start() {
+    setEventCallback(sf::Event::EventType::KeyPressed, [this](sf::Event e) { onKeyPressed(e); });
+    getBody()->SetLinearDamping(1);
+    setTag("Player");
+}
+
 void Player::update() {
-    if (std::abs(getBody()->GetLinearVelocity().x) < 8) {
+    if (std::abs(getBody()->GetLinearVelocity().x) < maxSpeed) {
         if (sf::Keyboard::isKeyPressed(_leftKey)) {
-            getBody()->ApplyLinearImpulseToCenter(b2Vec2(-0.6f, 0), true);
+            getBody()->ApplyLinearImpulseToCenter(b2Vec2(-0.4f, 0), true);
         }
         if (sf::Keyboard::isKeyPressed(_rightKey)) {
-            getBody()->ApplyLinearImpulseToCenter(b2Vec2(0.6f, 0), true);
+            getBody()->ApplyLinearImpulseToCenter(b2Vec2(0.4f, 0), true);
         }
     }
 
@@ -30,10 +32,46 @@ void Player::update() {
         }
 	}
 }
+void Player::applyBonus(Bonus::BonusType bonus) {
+    switch (bonus) {
+    case Bonus::BonusType::speedBonus:
+        maxSpeed += 1;
+        break;
+    case Bonus::BonusType::jumpBonus:
+        maxJump += 2;
+        break;
+    }
+}
+
+void Player::onCollisionEnter(GameObject* other, b2Contact* contact) {
+    if (other->getTag() == "Platform") {
+        _canJump = true;
+    }
+    else if (other->getTag() == "Cake") {
+        incrScore();
+    }
+    else if (other->getTag() == "Bonus") {
+        applyBonus(dynamic_cast<Bonus*>(other)->getBonusType()); //prb avec le getter
+    }
+}
+
+void Player::onCollisionExit(GameObject* other, b2Contact* contact) {
+    if (other->getTag() == "Platform" && getBody()->GetContactList()) {
+        bool isStillOnFloor{ false };
+        for (auto c{ getBody()->GetContactList() }; c && !isStillOnFloor; c = c->next) {
+            // Foreach contact, check if it is touching a platform
+            if (c->contact->IsTouching() && ((GameObject*)c->other->GetUserData().pointer)->getTag() == "Platform") {
+                isStillOnFloor = true;
+            }
+        }
+        // Is touching a platform, can jump
+        _canJump = isStillOnFloor;
+	}
+}
 
 void Player::onKeyPressed(sf::Event e) {
     if (_canJump && e.key.code == _upKey) {
-        getBody()->ApplyLinearImpulseToCenter(b2Vec2(0.0f, 12), true);
+        getBody()->ApplyLinearImpulseToCenter(b2Vec2(0.0f, maxJump), true);
         _canJump = false;
     }
 }

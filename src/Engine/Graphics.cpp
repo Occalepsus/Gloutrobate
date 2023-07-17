@@ -5,7 +5,7 @@ gloutrobate::Graphics::Graphics(std::string const& name, int width, int height, 
 	_renderWindow.setKeyRepeatEnabled(false);
 }
 
-bool gloutrobate::Graphics::drawFrame(std::span<std::shared_ptr<GameObject>> const& gameObjects) {
+bool gloutrobate::Graphics::drawFrame(std::span<GameObject*> const& gameObjects) {
 	_renderWindow.clear();
 	
 	sf::Event rwEvent;
@@ -16,25 +16,20 @@ bool gloutrobate::Graphics::drawFrame(std::span<std::shared_ptr<GameObject>> con
 			return false;
 		}
 		else {
-			// Huge complexity here, but it's the only way to make it work
-			for (auto const& gameObject : gameObjects) {
-				gameObject->handleEvent(rwEvent);
+			for (auto it = _eventCallbacks.find(rwEvent.type); it != _eventCallbacks.end(); ++it) {
+				it->second(rwEvent);
 			}
 		}
 	}
 
-	for (auto const& gameObject : gameObjects) {
-		sf::Sprite sprite;
-		sprite.setTexture(gameObject->getTexture());
-		sf::Vector2f spriteSize{
-			gameObject->getSize().x * _pixelsPerMeter / (float)gameObject->getTexture().getSize().x,
-			gameObject->getSize().y * _pixelsPerMeter / (float)gameObject->getTexture().getSize().y
-		};
-		sprite.setScale(spriteSize);
-		sprite.setOrigin(spriteSize / 2.0f);
-		sprite.setPosition(gameObject->getPosition().x * _pixelsPerMeter, static_cast<float>(_renderWindow.getSize().y) - gameObject->getPosition().y * _pixelsPerMeter);
+	for (auto gameObjectPtr : gameObjects) {
+		if (gameObjectPtr->isActive()) {
+			auto sprite{ gameObjectPtr->getSprite() };
+			sprite.setPosition(_pixelsPerMeter * sprite.getPosition().x, (float)_renderWindow.getSize().y - _pixelsPerMeter * sprite.getPosition().y);
+			sprite.scale(_pixelsPerMeter, _pixelsPerMeter);
 
-		_renderWindow.draw(sprite);
+			_renderWindow.draw(sprite);
+		}
 	}
 	for (auto const& drawable : _drawables) {
 		_renderWindow.draw(*drawable);

@@ -6,6 +6,7 @@
 #include <span>
 
 #include "GameObject.h"
+#include "ContactListener.h"
 
 namespace gloutrobate {
 	class Physics {
@@ -16,16 +17,19 @@ namespace gloutrobate {
 		const int32 _positionIterations{ 2 };
 		const float _skinWidth{ 0.1f };
 
+		const ContactListener _contactListener{};
+		void setupContactListener() { _world.SetContactListener((b2ContactListener*)(&_contactListener)); };
+
 	public:
-		Physics() = default;
-		explicit Physics(float fps) : _timeStep{ 1.0f / fps } {};
-		Physics(float fps, int velocityIterations, int positionIterations) : _timeStep{ 1.0f / fps }, _velocityIterations{ velocityIterations }, _positionIterations{ positionIterations } {};
+		Physics() { setupContactListener(); };
+		explicit Physics(float fps) : _timeStep{ 1.0f / fps } { setupContactListener(); };
+		Physics(float fps, int velocityIterations, int positionIterations) :
+			_timeStep{ 1.0f / fps }, _velocityIterations{ velocityIterations }, _positionIterations{ positionIterations } 
+		{ setupContactListener(); };
 
-		void update(std::span<std::shared_ptr<GameObject>> const& gameObjects);
+		void update(std::span<GameObject*> const& gameObjects);
 
-		void createDynamicBody(std::shared_ptr<GameObject> gameObjectPtr, float mass);
-		void createStaticBody(std::shared_ptr<GameObject> gameObjectPtr);
-
-		void setContactListener(b2ContactListener* contactListener);
+		void createDynamicBody(GameObject* gameObjectPtr, float mass);
+		void createStaticBody(GameObject* gameObjectPtr);
 	};
 }

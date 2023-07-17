@@ -1,22 +1,37 @@
 #pragma once
 
 #include "GameObject.h"
+#include "Engine.h"
 
-gloutrobate::GameObject::GameObject(sf::Texture const& texture) : GameObject(sf::Vector2f{ 0.0f, 0.0f }, sf::Vector2f{ (float)texture.getSize().x, (float)texture.getSize().y }, texture) {};
+gloutrobate::GameObject::GameObject(sf::Texture const& texture) : GameObject(sf::Vector2f(), sf::Vector2f{ texture.getSize() }, texture) {};
 
-gloutrobate::GameObject::GameObject(sf::Vector2f const& _pos, sf::Vector2f const& size, sf::Texture const& texture) : _pos{ _pos }, _size{ size }, _texture{ texture } {}
+gloutrobate::GameObject::GameObject(sf::Vector2f const& pos, sf::Vector2f const& size, sf::Texture const& texture) : _pos{ pos }, _size{ size }, _sprite{ texture } {
+	_sprite.setOrigin(size.x / 2, size.y / 2);
+	_sprite.setPosition(pos);
+	_sprite.setScale(
+		size.x / (float)texture.getSize().x,
+		size.y / (float)texture.getSize().y
+	);
+}
 
-void gloutrobate::GameObject::handleEvent(sf::Event const& event) {
-	if (_eventCallbacks.contains(event.type)) {
-		_eventCallbacks[event.type](event);
-	}
+void gloutrobate::GameObject::setGameEngine(Engine* enginePtr) {
+	_enginePtr = enginePtr;
+}
+
+void gloutrobate::GameObject::setEventCallback(sf::Event::EventType eventType, std::function<void(sf::Event)> const& callback) {
+	_enginePtr->setEventCallback(eventType, callback);
 }
 
 void gloutrobate::GameObject::updatePositionFromPhysics() {
+	if (_active != _body->IsEnabled()) {
+		_body->SetEnabled(_active);
+	}
+
 	if (_body != nullptr) {
 		_pos.x = _body->GetPosition().x - _size.x / 2;
 		_pos.y = _body->GetPosition().y + _size.y / 2;
 	}
+	_sprite.setPosition(_pos);
 }
 
 sf::Vector2f gloutrobate::GameObject::getPosition() const {
@@ -44,8 +59,8 @@ sf::Vector2f gloutrobate::GameObject::getSize() const {
 	return _size;
 }
 
-sf::Texture const& gloutrobate::GameObject::getTexture() const {
-	return _texture;
+sf::Sprite gloutrobate::GameObject::getSprite() const {
+	return _sprite;
 }
 
 b2Body* gloutrobate::GameObject::getBody() const {
@@ -53,4 +68,21 @@ b2Body* gloutrobate::GameObject::getBody() const {
 }
 void gloutrobate::GameObject::setBody(b2Body* b) {
 	_body = b;
+	_body->GetUserData().pointer = std::bit_cast<uintptr_t>(this);
+}
+
+void gloutrobate::GameObject::setActive(bool active) {
+	this->_active = active;
+}
+bool gloutrobate::GameObject::isActive() const {
+	return _active;
+}
+
+void gloutrobate::GameObject::setTag(std::string_view const& tag) {
+	if (!tag.empty()) {
+		_tag = tag;
+	}
+}
+std::string_view gloutrobate::GameObject::getTag() const {
+	return _tag;
 }
