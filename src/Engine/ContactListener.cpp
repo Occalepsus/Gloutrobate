@@ -1,3 +1,5 @@
+#include <bit>
+
 #include "ContactListener.h"
 
 #include "GameObject.h"

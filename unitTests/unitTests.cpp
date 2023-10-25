@@ -174,7 +174,7 @@ TEST(GameEngine, FrameLimiterWithPhysics) {
 	auto platformPosInit{ sf::Vector2f(100, 2) };
 	auto player{ std::make_unique<Player>(playerPosInit, sf::Vector2f(1, 1.5f), texture) };
 	player->setKeys(sf::Keyboard::Z, sf::Keyboard::Q, sf::Keyboard::S, sf::Keyboard::D);
-	auto platform{ std::make_unique<Platform>(platformPosInit, sf::Vector2f(1000, 1), texture2) };
+	auto platform{ std::make_unique<GameObject>(platformPosInit, sf::Vector2f(1000, 1), texture2) };
 
 	std::vector<long long> measures{};
 
